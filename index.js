@@ -30,7 +30,7 @@ sheet.data.values.forEach((row) => {
 	const lecturer = row[lecturerColumnIndex]
 	const link = row[linkColumnIndex]
 
-	if (date && time && title && lecturer && link) {
+	if (date && time && title) {
 		const [day, month, year] = date.split('. ')
 		const [hour, minute] = time.split(':')
 		cleanData.push({
@@ -41,7 +41,6 @@ sheet.data.values.forEach((row) => {
 				hour: parseInt(hour),
 				minute: parseInt(minute),
 			},
-			time,
 			title,
 			lecturer,
 			link,
@@ -70,4 +69,16 @@ if (futureAndCurrentEvents.length === 0) {
 
 const activeEvent = futureAndCurrentEvents[0]
 
-console.log(activeEvent)
+let message = `📅 Dnes, ${activeEvent.date.day}. ${activeEvent.date.month}. ${
+	activeEvent.date.year
+} v ${activeEvent.date.hour}:${activeEvent.date.minute} začíná další lekce.
+Plánované téma je ${activeEvent.title.replaceAll('\n', ' / ')}.`
+
+if (activeEvent.lecturer) {
+	message += `\nVýuku povede ${activeEvent.lecturer}.`
+}
+if (activeEvent.link) {
+	message += `\nOdkaz pro připojení online: ${activeEvent.link}.`
+}
+
+console.log(message)
