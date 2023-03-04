@@ -1,5 +1,6 @@
 import { sheets as s } from '@googleapis/sheets'
 import dotenv from 'dotenv'
+import { exit } from 'process'
 
 dotenv.config()
 
@@ -52,8 +53,8 @@ sheet.data.values.forEach((row) => {
 	}
 })
 
-const nowMorning = new Date()
-nowMorning.setHours(0, 0, 0, 0)
+const todayMorning = new Date()
+todayMorning.setHours(0, 0, 0, 0)
 
 const futureAndCurrentEvents = cleanData.filter((event) => {
 	const eventDate = new Date(
@@ -64,7 +65,7 @@ const futureAndCurrentEvents = cleanData.filter((event) => {
 		event.date.minute,
 	)
 
-	return nowMorning <= eventDate
+	return todayMorning <= eventDate
 })
 
 const activeEvent = futureAndCurrentEvents[0]
@@ -75,9 +76,9 @@ if (activeEvent === undefined) {
 }
 
 if (
-	activeEvent.date.year !== nowMorning.getFullYear() ||
-	activeEvent.date.month !== nowMorning.getMonth() + 1 ||
-	activeEvent.date.day !== nowMorning.getDate()
+	activeEvent.date.year !== todayMorning.getFullYear() ||
+	activeEvent.date.month !== todayMorning.getMonth() + 1 ||
+	activeEvent.date.day !== todayMorning.getDate()
 ) {
 	console.log('No active event scheduled for today.')
 	exit(0)
