@@ -1,0 +1,17 @@
+{
+	"name": "daweb-kalendar-slack",
+	"private": true,
+	"version": "1.0.0",
+	"description": "",
+	"type": "module",
+	"scripts": {
+		"start": "node index.js"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"dependencies": {
+		"@googleapis/sheets": "^4.0.1",
+		"dotenv": "^16.0.3"
+	}
+}
