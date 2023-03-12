@@ -112,8 +112,25 @@ if (activeEvent.type === 'online') {
 	}
 }
 
+const slideUrl = new URL('https://intro.czechitas-podklady.cz/slide.html')
+slideUrl.searchParams.set('title', activeEvent.title)
+slideUrl.searchParams.set('meta1', activeEvent.lecturer ?? '')
+slideUrl.searchParams.set(
+	'meta2',
+	`${activeEvent.date.day}. ${activeEvent.date.month}. ${activeEvent.date.year} ${activeEvent.date.hour}:${activeEvent.date.minute}`,
+)
+const previewImage = new URL('https://api.apiflash.com/v1/urltoimage')
+previewImage.searchParams.set('access_key', '051686ce27cd408ca39cc01a9b187cb3')
+previewImage.searchParams.set('format', 'jpeg')
+previewImage.searchParams.set('width', '1920')
+previewImage.searchParams.set('height', '1080')
+previewImage.searchParams.set('response_type', 'image')
+previewImage.searchParams.set('ttl', '864000')
+previewImage.searchParams.set('url', slideUrl.toString())
+
 console.log('Message:')
 console.log(message)
+console.log('Image:', previewImage.toString())
 
 await fetch(webhookUrl, {
 	method: 'POST',
@@ -122,5 +139,19 @@ await fetch(webhookUrl, {
 	},
 	body: JSON.stringify({
 		text: message,
+		blocks: [
+			{
+				type: 'section',
+				text: {
+					type: 'mrkdwn',
+					text: message,
+				},
+			},
+			{
+				type: 'image',
+				image_url: previewImage.toString(),
+				alt_text: '',
+			},
+		],
 	}),
 })
