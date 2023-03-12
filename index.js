@@ -113,7 +113,24 @@ if (activeEvent.type === 'online') {
 }
 
 const slideUrl = new URL('https://intro.czechitas-podklady.cz/slide.html')
-slideUrl.searchParams.set('title', activeEvent.title)
+slideUrl.searchParams.set(
+	'title',
+	activeEvent.title
+		.split(' ')
+		.reduce(
+			(lines, word) => {
+				console.log(lines)
+				if (lines[lines.length - 1].length + word.length > 22) {
+					lines.push(word + ' ')
+				} else {
+					lines[lines.length - 1] += word + ' '
+				}
+				return lines
+			},
+			[''],
+		)
+		.join('\n'),
+)
 slideUrl.searchParams.set('meta1', activeEvent.lecturer ?? '')
 slideUrl.searchParams.set(
 	'meta2',
