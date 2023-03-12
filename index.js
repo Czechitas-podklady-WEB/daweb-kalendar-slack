@@ -158,16 +158,16 @@ await fetch(webhookUrl, {
 		text: message,
 		blocks: [
 			{
+				type: 'image',
+				image_url: previewImage.toString(),
+				alt_text: '',
+			},
+			{
 				type: 'section',
 				text: {
 					type: 'mrkdwn',
 					text: message,
 				},
-			},
-			{
-				type: 'image',
-				image_url: previewImage.toString(),
-				alt_text: '',
 			},
 		],
 	}),
