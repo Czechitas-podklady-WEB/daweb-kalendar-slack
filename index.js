@@ -24,6 +24,61 @@ const sheet = await sheets.spreadsheets.values.get({
 	range,
 })
 
+const knownUsers = [
+	{
+		name: 'Filip Chalupa',
+		memberId: 'U04QMEZ3LJ0',
+	},
+	{
+		name: 'Luděk Roleček',
+		memberId: 'U04QG346QN9',
+	},
+	{
+		name: 'Filip Jirsák',
+		memberId: 'U04Q4EZJHHD',
+	},
+	{
+		name: 'Markéta Willis',
+		memberId: 'U04QCD22A86',
+	},
+	{
+		name: 'Martin Podloucký',
+		memberId: 'U04QXL03WUR',
+	},
+	// {
+	// 	name: 'Veronika Rychlá',
+	// 	memberId: '',
+	// },
+	// {
+	// 	name: 'Petra Drahoňovská',
+	// 	memberId: '',
+	// },
+	{
+		name: 'Petra Smiga',
+		memberId: 'U04SHSS85A4',
+	},
+	{
+		name: 'Jakub Fišer',
+		memberId: 'U04QJT81CAF',
+	},
+	{
+		name: 'Standa Kosáček',
+		memberId: 'U04QMEZFNN8',
+	},
+	{
+		name: 'Kája Šafaříková',
+		memberId: 'U04RU2ZNC0K',
+	},
+	{
+		name: 'Sergej Kurbanov',
+		memberId: 'U04QCD2EGVC',
+	},
+	// {
+	// 	name: 'Jana Meszarosová',
+	// 	memberId: '',
+	// },
+]
+
 const cleanData = []
 
 sheet.data.values.forEach((row) => {
@@ -86,11 +141,24 @@ if (
 
 let message = `Dnes, *${activeEvent.date.day}. ${activeEvent.date.month}. ${
 	activeEvent.date.year
-}* v *${activeEvent.date.hour}:${activeEvent.date.minute}* začíná další lekce.
+}* v *${activeEvent.date.hour}:${activeEvent.date.minute
+	.toString()
+	.padStart(2, '0')}* začíná další lekce.
 Plánované téma je *${activeEvent.title.replaceAll('\n', ', ')}*.`
 
-if (activeEvent.lecturer) {
-	message += `\nVýuku povede *${activeEvent.lecturer}*.`
+const lecturer = activeEvent.lecturer
+	?.split(' & ')
+	.map((name) => {
+		const lecturer = knownUsers.find((user) => user.name === name)
+		if (lecturer) {
+			return `<@${lecturer.memberId}>`
+		}
+		return name
+	})
+	.join(' & ')
+
+if (lecturer) {
+	message += `\nVýuku povede *${lecturer}*.`
 }
 if (activeEvent.type === 'online') {
 	message += `\nLekce bude probíhat *pouze online*`
@@ -134,7 +202,11 @@ slideUrl.searchParams.set(
 slideUrl.searchParams.set('meta1', activeEvent.lecturer ?? '')
 slideUrl.searchParams.set(
 	'meta2',
-	`${activeEvent.date.day}. ${activeEvent.date.month}. ${activeEvent.date.year} ${activeEvent.date.hour}:${activeEvent.date.minute}`,
+	`${activeEvent.date.day}. ${activeEvent.date.month}. ${
+		activeEvent.date.year
+	} ${activeEvent.date.hour}:${activeEvent.date.minute
+		.toString()
+		.padStart(2, '0')}`,
 )
 const previewImage = new URL('https://api.apiflash.com/v1/urltoimage')
 previewImage.searchParams.set('access_key', '051686ce27cd408ca39cc01a9b187cb3')
