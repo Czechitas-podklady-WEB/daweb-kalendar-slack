@@ -151,7 +151,7 @@ let message = `Dnes, *${activeEvent.date.day}. ${activeEvent.date.month}. ${
 Plánované téma je *${activeEvent.title.replaceAll('\n', ', ')}*.`
 
 const lecturer = activeEvent.lecturer
-	?.split(' & ')
+	?.split(', ')
 	.map((name) => {
 		const lecturer = knownUsers.find((user) => user.name === name)
 		if (lecturer) {
@@ -159,7 +159,7 @@ const lecturer = activeEvent.lecturer
 		}
 		return name
 	})
-	.join(' & ')
+	.join(', ')
 
 if (lecturer) {
 	message += `\nVýuku povede *${lecturer}*.`
