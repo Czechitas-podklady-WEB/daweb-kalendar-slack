@@ -77,6 +77,10 @@ const knownUsers = [
 	// 	name: 'Jana Meszarosová',
 	// 	memberId: '',
 	// },
+	{
+		name: 'Jirka Vebr',
+		memberId: 'U04QCD4538E',
+	},
 ]
 
 const cleanData = []
