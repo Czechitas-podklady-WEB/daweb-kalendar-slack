@@ -222,6 +222,7 @@ previewImage.searchParams.set('url', slideUrl.toString())
 
 console.log('Message:')
 console.log(message)
+console.log('')
 console.log('Image:', previewImage.toString())
 
 await fetch(webhookUrl, {
