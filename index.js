@@ -4,7 +4,7 @@ import { exit } from 'process'
 
 dotenv.config()
 
-const spreadsheetId = '1bwBwbf7Li0pMZho7cK66Zrmv1X_An9UufQ_W5QCoYX4'
+const spreadsheetId = process.env.SPREADSHEET_ID
 const apiKey = process.env.API_KEY
 const webhookUrl = process.env.WEBHOOK_URL
 const dateColumnIndex = 2
