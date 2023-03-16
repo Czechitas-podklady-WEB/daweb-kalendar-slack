@@ -191,7 +191,6 @@ slideUrl.searchParams.set(
 		.split(' ')
 		.reduce(
 			(lines, word) => {
-				console.log(lines)
 				if (lines[lines.length - 1].length + word.length > 22) {
 					lines.push(word + ' ')
 				} else {
