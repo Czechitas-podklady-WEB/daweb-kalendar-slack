@@ -23,3 +23,4 @@ jobs:
         env:
           API_KEY: ${{ secrets.API_KEY }}
           WEBHOOK_URL: ${{ secrets.WEBHOOK_URL }}
+          SPREADSHEET_ID: ${{ secrets.SPREADSHEET_ID }}
