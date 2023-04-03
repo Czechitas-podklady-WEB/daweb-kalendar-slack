@@ -1,6 +1,10 @@
 import { sheets as s } from '@googleapis/sheets'
 import dotenv from 'dotenv'
 import { exit } from 'process'
+import { createPreviewImageUrl } from './src/createPreviewImageUrl.js'
+import { createSlideUrl } from './src/createSlideUrl.js'
+import { knownSlackUsers } from './src/knownSlackUsers.js'
+import { updateWebsiteSlideUrl } from './src/updateWebsiteSlideUrl.js'
 
 dotenv.config()
 
@@ -23,65 +27,6 @@ const sheet = await sheets.spreadsheets.values.get({
 	majorDimension: 'ROWS',
 	range,
 })
-
-const knownUsers = [
-	{
-		name: 'Filip Chalupa',
-		memberId: 'U04QMEZ3LJ0',
-	},
-	{
-		name: 'Luděk Roleček',
-		memberId: 'U04QG346QN9',
-	},
-	{
-		name: 'Filip Jirsák',
-		memberId: 'U04Q4EZJHHD',
-	},
-	{
-		name: 'Markéta Willis',
-		memberId: 'U04QCD22A86',
-	},
-	{
-		name: 'Martin Podloucký',
-		memberId: 'U04QXL03WUR',
-	},
-	// {
-	// 	name: 'Veronika Rychlá',
-	// 	memberId: '',
-	// },
-	// {
-	// 	name: 'Petra Drahoňovská',
-	// 	memberId: '',
-	// },
-	{
-		name: 'Petra Smiga',
-		memberId: 'U04SHSS85A4',
-	},
-	{
-		name: 'Jakub Fišer',
-		memberId: 'U04QJT81CAF',
-	},
-	{
-		name: 'Standa Kosáček',
-		memberId: 'U04QMEZFNN8',
-	},
-	{
-		name: 'Kája Šafaříková',
-		memberId: 'U04RU2ZNC0K',
-	},
-	{
-		name: 'Sergej Kurbanov',
-		memberId: 'U04QCD2EGVC',
-	},
-	// {
-	// 	name: 'Jana Meszarosová',
-	// 	memberId: '',
-	// },
-	{
-		name: 'Jirka Vebr',
-		memberId: 'U04QCD4538E',
-	},
-]
 
 const cleanData = []
 
@@ -153,7 +98,7 @@ Plánované téma je *${activeEvent.title.replaceAll('\n', ', ')}*.`
 const lecturer = activeEvent.lecturer
 	?.split(', ')
 	.map((name) => {
-		const lecturer = knownUsers.find((user) => user.name === name)
+		const lecturer = knownSlackUsers.find((user) => user.name === name)
 		if (lecturer) {
 			return `<@${lecturer.memberId}>`
 		}
@@ -184,46 +129,14 @@ if (activeEvent.type === 'online') {
 	}
 }
 
-const slideUrl = new URL('https://intro.czechitas-podklady.cz/slide.html')
-slideUrl.searchParams.set(
-	'title',
-	activeEvent.title
-		.split(' ')
-		.reduce(
-			(lines, word) => {
-				if (lines[lines.length - 1].length + word.length > 22) {
-					lines.push(word + ' ')
-				} else {
-					lines[lines.length - 1] += word + ' '
-				}
-				return lines
-			},
-			[''],
-		)
-		.join('\n'),
-)
-slideUrl.searchParams.set('meta1', activeEvent.lecturer ?? '')
-slideUrl.searchParams.set(
-	'meta2',
-	`${activeEvent.date.day}. ${activeEvent.date.month}. ${
-		activeEvent.date.year
-	} ${activeEvent.date.hour}:${activeEvent.date.minute
-		.toString()
-		.padStart(2, '0')}`,
-)
-const previewImage = new URL('https://api.apiflash.com/v1/urltoimage')
-previewImage.searchParams.set('access_key', '051686ce27cd408ca39cc01a9b187cb3')
-previewImage.searchParams.set('format', 'jpeg')
-previewImage.searchParams.set('width', '1920')
-previewImage.searchParams.set('height', '1080')
-previewImage.searchParams.set('response_type', 'image')
-previewImage.searchParams.set('ttl', '864000')
-previewImage.searchParams.set('url', slideUrl.toString())
+const slideUrl = createSlideUrl(activeEvent)
+
+const previewImageUrl = createPreviewImageUrl(slideUrl)
 
 console.log('Message:')
 console.log(message)
 console.log('')
-console.log('Image:', previewImage.toString())
+console.log('Image:', previewImageUrl)
 
 await fetch(webhookUrl, {
 	method: 'POST',
@@ -235,7 +148,7 @@ await fetch(webhookUrl, {
 		blocks: [
 			{
 				type: 'image',
-				image_url: previewImage.toString(),
+				image_url: previewImageUrl,
 				alt_text: '',
 			},
 			{
@@ -248,3 +161,5 @@ await fetch(webhookUrl, {
 		],
 	}),
 })
+
+await updateWebsiteSlideUrl(slideUrl)
