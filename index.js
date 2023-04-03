@@ -138,29 +138,28 @@ console.log(message)
 console.log('')
 console.log('Image:', previewImageUrl)
 
-// @TODO: uncomment after github pages test
-// await fetch(webhookUrl, {
-// 	method: 'POST',
-// 	headers: {
-// 		'Content-Type': 'application/json',
-// 	},
-// 	body: JSON.stringify({
-// 		text: message,
-// 		blocks: [
-// 			{
-// 				type: 'image',
-// 				image_url: previewImageUrl,
-// 				alt_text: '',
-// 			},
-// 			{
-// 				type: 'section',
-// 				text: {
-// 					type: 'mrkdwn',
-// 					text: message,
-// 				},
-// 			},
-// 		],
-// 	}),
-// })
+await fetch(webhookUrl, {
+	method: 'POST',
+	headers: {
+		'Content-Type': 'application/json',
+	},
+	body: JSON.stringify({
+		text: message,
+		blocks: [
+			{
+				type: 'image',
+				image_url: previewImageUrl,
+				alt_text: '',
+			},
+			{
+				type: 'section',
+				text: {
+					type: 'mrkdwn',
+					text: message,
+				},
+			},
+		],
+	}),
+})
 
 await updateWebsiteSlideUrl(slideUrl)
