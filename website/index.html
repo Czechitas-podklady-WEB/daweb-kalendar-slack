@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="cs">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Přesměrování</title>
+		<meta name="color-scheme" content="light dark" />
+		<script type="module">
+			const slideUrl = '__SLIDE_URL__' // This will be replaced by a GitHub Action
+			if (slideUrl.startsWith('http')) {
+				document.body.innerHTML = `<a href="${slideUrl}">Přesměrovat</a>`
+				window.location.href = slideUrl
+			}
+		</script>
+	</head>
+	<body>
+		<p>Něco se porouchalo.</p>
+	</body>
+</html>
