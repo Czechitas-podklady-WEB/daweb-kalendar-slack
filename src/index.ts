@@ -1,17 +1,12 @@
 import { sheets as s } from '@googleapis/sheets'
-import dotenv from 'dotenv'
 import { exit } from 'process'
 import { createPreviewImageUrl } from './utilities/createPreviewImageUrl'
 import { createSlideUrl } from './utilities/createSlideUrl'
+import { getConfiguration } from './utilities/getConfiguration'
 import { knownSlackUsers } from './utilities/knownSlackUsers'
 import { updateWebsiteSlideUrl } from './utilities/updateWebsiteSlideUrl'
 
-dotenv.config()
-
-const spreadsheetId = process.env.SPREADSHEET_ID as string
-const apiKey = process.env.API_KEY as string
-const webhookUrl = process.env.WEBHOOK_URL as string
-// @TODO: remove cast and throw if undefined
+const { spreadsheetId, apiKey, webhookUrl } = getConfiguration()
 
 const dateColumnIndex = 2
 const timeColumnIndex = 3
