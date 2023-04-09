@@ -1,6 +1,6 @@
 import { CalendarEvent } from './CalendarEvent'
 
-export const createSlideUrl = (event: CalendarEvent) => {
+export const createCalenderEventSlideUrl = (event: CalendarEvent) => {
 	const url = new URL('https://intro.czechitas-podklady.cz/slide.html')
 	url.searchParams.set(
 		'title',
