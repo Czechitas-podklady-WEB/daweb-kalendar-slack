@@ -1,85 +1,23 @@
-import { sheets as s } from '@googleapis/sheets'
 import { exit } from 'process'
 import { createPreviewImageUrl } from './utilities/createPreviewImageUrl'
 import { createSlideUrl } from './utilities/createSlideUrl'
+import { filterFutureCalendarEvents } from './utilities/filterFutureCalendarEvents'
+import { getAllCalendarEvents } from './utilities/getAllCalendarEvents'
 import { getConfiguration } from './utilities/getConfiguration'
 import { knownSlackUsers } from './utilities/knownSlackUsers'
 import { updateWebsiteSlideUrl } from './utilities/updateWebsiteSlideUrl'
 
-const { spreadsheetId, apiKey, webhookUrl } = getConfiguration()
+const { webhookUrl } = getConfiguration()
 
-const dateColumnIndex = 2
-const timeColumnIndex = 3
-const titleColumnIndex = 5
-const lecturerColumnIndex = 7
-const typeColumnIndex = 8
-const linkColumnIndex = 14
-const range = 'Rozvrh!A1:O150'
-
-const sheets = s('v4')
-
-const sheet = await sheets.spreadsheets.values.get({
-	key: apiKey,
-	spreadsheetId,
-	majorDimension: 'ROWS',
-	range,
-})
-
-const cleanData: Array<{
-	date: {
-		year: number
-		month: number
-		day: number
-		hour: number
-		minute: number
-	}
-	title: string
-	lecturer: string
-	type: string
-	link: string
-}> = []
-
-sheet.data.values?.forEach((row) => {
-	const date = row[dateColumnIndex]
-	const time = row[timeColumnIndex]
-	const title = row[titleColumnIndex]
-	const lecturer = row[lecturerColumnIndex]
-	const type = row[typeColumnIndex]
-	const link = row[linkColumnIndex]
-
-	if (date && time && title) {
-		const [day, month, year] = date.split('. ')
-		const [hour, minute] = time.split(':')
-		cleanData.push({
-			date: {
-				year: parseInt(year),
-				month: parseInt(month),
-				day: parseInt(day),
-				hour: parseInt(hour),
-				minute: parseInt(minute),
-			},
-			title,
-			lecturer,
-			type,
-			link,
-		})
-	}
-})
+const allCalendarEvents = await getAllCalendarEvents()
 
 const todayMorning = new Date()
 todayMorning.setHours(0, 0, 0, 0)
 
-const futureAndCurrentEvents = cleanData.filter((event) => {
-	const eventDate = new Date(
-		event.date.year,
-		event.date.month - 1,
-		event.date.day,
-		event.date.hour,
-		event.date.minute,
-	)
-
-	return todayMorning <= eventDate
-})
+const futureAndCurrentEvents = filterFutureCalendarEvents(
+	todayMorning,
+	allCalendarEvents,
+)
 
 const activeEvent = futureAndCurrentEvents[0]
 
