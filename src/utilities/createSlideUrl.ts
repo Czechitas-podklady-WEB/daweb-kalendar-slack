@@ -1,11 +1,13 @@
-export const createSlideUrl = (event: any) => {
+import { CalendarEvent } from './CalendarEvent'
+
+export const createSlideUrl = (event: CalendarEvent) => {
 	const url = new URL('https://intro.czechitas-podklady.cz/slide.html')
 	url.searchParams.set(
 		'title',
 		event.title
 			.split(' ')
 			.reduce(
-				(lines: any, word: any) => {
+				(lines, word) => {
 					if (lines[lines.length - 1].length + word.length > 22) {
 						lines.push(word + ' ')
 					} else {
