@@ -5,13 +5,16 @@
 	"description": "",
 	"type": "module",
 	"scripts": {
-		"start": "node index.js"
+		"start": "tsx src/index.ts"
 	},
 	"keywords": [],
 	"author": "",
 	"license": "ISC",
 	"dependencies": {
 		"@googleapis/sheets": "^4.0.1",
-		"dotenv": "^16.0.3"
+		"@types/node": "^18.15.11",
+		"dotenv": "^16.0.3",
+		"tsx": "^3.12.6",
+		"typescript": "^5.0.4"
 	}
 }

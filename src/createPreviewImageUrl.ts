@@ -1,4 +1,4 @@
-export const createPreviewImageUrl = (slideUrl) => {
+export const createPreviewImageUrl = (slideUrl: string) => {
 	const url = new URL('https://api.apiflash.com/v1/urltoimage')
 	url.searchParams.set('access_key', '051686ce27cd408ca39cc01a9b187cb3')
 	url.searchParams.set('format', 'jpeg')

@@ -1,11 +1,11 @@
-export const createSlideUrl = (event) => {
+export const createSlideUrl = (event: any) => {
 	const url = new URL('https://intro.czechitas-podklady.cz/slide.html')
 	url.searchParams.set(
 		'title',
 		event.title
 			.split(' ')
 			.reduce(
-				(lines, word) => {
+				(lines: any, word: any) => {
 					if (lines[lines.length - 1].length + word.length > 22) {
 						lines.push(word + ' ')
 					} else {

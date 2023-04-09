@@ -1,16 +1,18 @@
 import { sheets as s } from '@googleapis/sheets'
 import dotenv from 'dotenv'
 import { exit } from 'process'
-import { createPreviewImageUrl } from './src/createPreviewImageUrl.js'
-import { createSlideUrl } from './src/createSlideUrl.js'
-import { knownSlackUsers } from './src/knownSlackUsers.js'
-import { updateWebsiteSlideUrl } from './src/updateWebsiteSlideUrl.js'
+import { createPreviewImageUrl } from './createPreviewImageUrl'
+import { createSlideUrl } from './createSlideUrl'
+import { knownSlackUsers } from './knownSlackUsers'
+import { updateWebsiteSlideUrl } from './updateWebsiteSlideUrl'
 
 dotenv.config()
 
-const spreadsheetId = process.env.SPREADSHEET_ID
-const apiKey = process.env.API_KEY
-const webhookUrl = process.env.WEBHOOK_URL
+const spreadsheetId = process.env.SPREADSHEET_ID as string
+const apiKey = process.env.API_KEY as string
+const webhookUrl = process.env.WEBHOOK_URL as string
+// @TODO: remove cast and throw if undefined
+
 const dateColumnIndex = 2
 const timeColumnIndex = 3
 const titleColumnIndex = 5
@@ -28,9 +30,21 @@ const sheet = await sheets.spreadsheets.values.get({
 	range,
 })
 
-const cleanData = []
+const cleanData: Array<{
+	date: {
+		year: number
+		month: number
+		day: number
+		hour: number
+		minute: number
+	}
+	title: string
+	lecturer: string
+	type: string
+	link: string
+}> = []
 
-sheet.data.values.forEach((row) => {
+sheet.data.values?.forEach((row) => {
 	const date = row[dateColumnIndex]
 	const time = row[timeColumnIndex]
 	const title = row[titleColumnIndex]

@@ -55,4 +55,4 @@ export const knownSlackUsers = [
 		name: 'Jirka Vebr',
 		memberId: 'U04QCD4538E',
 	},
-]
+] as const
