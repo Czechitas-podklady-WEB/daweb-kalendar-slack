@@ -5,7 +5,8 @@
 	"description": "",
 	"type": "module",
 	"scripts": {
-		"start": "tsx src/index.ts"
+		"morning": "tsx src/morning.ts",
+		"sunday": "tsx src/sunday.ts"
 	},
 	"keywords": [],
 	"author": "",

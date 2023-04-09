@@ -1,13 +1,11 @@
 import { exit } from 'process'
+import { createCalenderEventSlideUrl } from './utilities/createCalenderEventSlideUrl'
 import { createPreviewImageUrl } from './utilities/createPreviewImageUrl'
-import { createSlideUrl } from './utilities/createSlideUrl'
 import { filterFutureCalendarEvents } from './utilities/filterFutureCalendarEvents'
 import { getAllCalendarEvents } from './utilities/getAllCalendarEvents'
-import { getConfiguration } from './utilities/getConfiguration'
 import { knownSlackUsers } from './utilities/knownSlackUsers'
+import { sendSlackMessage } from './utilities/sendSlackMessage'
 import { updateWebsiteSlideUrl } from './utilities/updateWebsiteSlideUrl'
-
-const { webhookUrl } = getConfiguration()
 
 const allCalendarEvents = await getAllCalendarEvents()
 
@@ -76,7 +74,7 @@ if (activeEvent.type === 'online') {
 	}
 }
 
-const slideUrl = createSlideUrl(activeEvent)
+const slideUrl = createCalenderEventSlideUrl(activeEvent)
 
 const previewImageUrl = createPreviewImageUrl(slideUrl)
 
@@ -85,28 +83,22 @@ console.log(message)
 console.log('')
 console.log('Image:', previewImageUrl)
 
-await fetch(webhookUrl, {
-	method: 'POST',
-	headers: {
-		'Content-Type': 'application/json',
-	},
-	body: JSON.stringify({
-		text: message,
-		blocks: [
-			{
-				type: 'image',
-				image_url: previewImageUrl,
-				alt_text: '',
+await sendSlackMessage({
+	text: message,
+	blocks: [
+		{
+			type: 'image',
+			image_url: previewImageUrl,
+			alt_text: '',
+		},
+		{
+			type: 'section',
+			text: {
+				type: 'mrkdwn',
+				text: message,
 			},
-			{
-				type: 'section',
-				text: {
-					type: 'mrkdwn',
-					text: message,
-				},
-			},
-		],
-	}),
+		},
+	],
 })
 
 await updateWebsiteSlideUrl(slideUrl)
