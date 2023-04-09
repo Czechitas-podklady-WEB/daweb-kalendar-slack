@@ -36,6 +36,10 @@ jobs:
           API_KEY: ${{ secrets.API_KEY }}
           WEBHOOK_URL: ${{ secrets.WEBHOOK_URL }}
           SPREADSHEET_ID: ${{ secrets.SPREADSHEET_ID }}
+          SMTP_HOST: ${{ secrets.SMTP_HOST }}
+          SMTP_PORT: ${{ secrets.SMTP_PORT }}
+          SMTP_USER: ${{ secrets.SMTP_USER }}
+          SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
       - name: Setup Pages
         uses: actions/configure-pages@v3
       - name: Upload artifact

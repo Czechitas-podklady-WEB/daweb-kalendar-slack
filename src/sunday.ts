@@ -6,6 +6,7 @@ import { filterFutureCalendarEvents } from './utilities/filterFutureCalendarEven
 import { filterPastCalendarEvents } from './utilities/filterPastCalendarEvents'
 import { getAllCalendarEvents } from './utilities/getAllCalendarEvents'
 import { renderWeeklyEmail } from './utilities/renderWeeklyEmail'
+import { sendEmail } from './utilities/sendEmail'
 
 const allCalendarEvents = await getAllCalendarEvents()
 
@@ -40,7 +41,10 @@ const daysBetweenFirstCalendarEventAndNow = Math.floor(
 console.log(daysBetweenFirstCalendarEventAndNow)
 const weekNumber = Math.floor(daysBetweenFirstCalendarEventAndNow / 7) + 1
 
-const slideUrl = createSlideUrl('DA: Web', `${weekNumber}. týden`)
+const slideUrl = createSlideUrl(
+	`${weekNumber}. týden`,
+	'Digitální akademie: Web',
+)
 const previewImageUrl = createPreviewImageUrl(slideUrl)
 
 console.log(weekEvents)
@@ -59,4 +63,11 @@ await fs.writeFile(
 		.padStart(2, '0')}.html`,
 	emailHtml,
 	{ encoding: 'utf8' },
+)
+
+await sendEmail(
+	'chalupa.filip@gmail.com, filip0150@seznam.cz', // @TODO: add nikol.hanzelkova@czechitas.cz
+	`Digitální akademie: Web Praha, jaro 2023 - ${weekNumber}. Týdeník`,
+	`${weekNumber}. týden`,
+	emailHtml,
 )
