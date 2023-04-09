@@ -7,7 +7,24 @@
 		<title>Přesměrování</title>
 		<meta name="color-scheme" content="light dark" />
 		<script type="module">
-			const slideUrl = '__SLIDE_URL__' // This will be replaced by a GitHub Action
+			const slideUrl = await (async () => {
+				try {
+					const response = await fetch('slide-url.json')
+					if (!response.ok) {
+						throw new Error('HTTP error!')
+					}
+					const data = await response.json()
+					if (typeof data.url === 'string') {
+						return data.url
+					}
+				} catch (error) {
+					console.error(error)
+					setTimeout(() => {
+						window.location.reload()
+					}, 1000)
+				}
+				return ''
+			})()
 			if (slideUrl.startsWith('http')) {
 				document.body.innerHTML = `<a href="${slideUrl}">Přesměrovat</a>`
 				window.location.href = slideUrl

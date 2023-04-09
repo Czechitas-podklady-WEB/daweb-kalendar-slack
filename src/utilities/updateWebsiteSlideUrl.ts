@@ -1,9 +1,10 @@
 import fs from 'fs/promises'
 
-const indexHTMLPath = 'website/index.html'
+const indexHTMLPath = 'website/slide-url.json'
 
 export const updateWebsiteSlideUrl = async (slideUrl: string) => {
-	const originalContent = await fs.readFile(indexHTMLPath, { encoding: 'utf8' })
-	const newContent = originalContent.replaceAll('__SLIDE_URL__', slideUrl)
-	await fs.writeFile(indexHTMLPath, newContent, { encoding: 'utf8' })
+	const content = JSON.stringify({
+		url: slideUrl,
+	})
+	await fs.writeFile(indexHTMLPath, content, { encoding: 'utf8' })
 }
