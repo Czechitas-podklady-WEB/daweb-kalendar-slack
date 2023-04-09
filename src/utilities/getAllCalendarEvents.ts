@@ -35,19 +35,21 @@ export const getAllCalendarEvents = async () => {
 		if (date && time && title) {
 			const [day, month, year] = date.split('. ')
 			const [hour, minute] = time.split(':')
-			cleanData.push({
-				date: {
-					year: parseInt(year),
-					month: parseInt(month),
-					day: parseInt(day),
-					hour: parseInt(hour),
-					minute: parseInt(minute),
-				},
-				title,
-				lecturer,
-				type,
-				link,
-			})
+			if (day && month && year && hour && minute) {
+				cleanData.push({
+					date: {
+						year: parseInt(year),
+						month: parseInt(month),
+						day: parseInt(day),
+						hour: parseInt(hour),
+						minute: parseInt(minute),
+					},
+					title,
+					lecturer,
+					type,
+					link,
+				})
+			}
 		}
 	})
 
