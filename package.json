@@ -5,8 +5,8 @@
 	"description": "",
 	"type": "module",
 	"scripts": {
-		"morning": "tsx src/morning.ts",
-		"sunday": "tsx src/sunday.ts"
+		"today-notification": "tsx src/today-notification.ts",
+		"weekly-summary": "tsx src/weekly-summary.ts"
 	},
 	"keywords": [],
 	"author": "",

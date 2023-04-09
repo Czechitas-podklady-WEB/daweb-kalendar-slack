@@ -1,8 +1,8 @@
-name: Every sunday
+name: Weekly summary
 
 on:
   schedule:
-    - cron: '15 3 * * 0'
+    - cron: '15 3 * * 5'
   workflow_dispatch:
 
 concurrency:
@@ -23,7 +23,7 @@ jobs:
       - name: Install dependencies
         run: npm ci
       - name: Run
-        run: npm run sunday
+        run: npm run weekly-summary
         env:
           API_KEY: ${{ secrets.API_KEY }}
           WEBHOOK_URL: ${{ secrets.WEBHOOK_URL }}

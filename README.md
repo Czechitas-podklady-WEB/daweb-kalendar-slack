@@ -23,11 +23,11 @@ npm ci
 Start je doporučen provádět každý den ráno. Nejpozději v čase před začátkém brzké lekce s rezervou aspoň několika minut.
 
 ```bash
-npm run morning
+npm run today-notification
 ```
 
 A pro nedělní vygenerování týdeníku.
 
 ```bash
-npm run sunday
+npm run weekly-summary
 ```

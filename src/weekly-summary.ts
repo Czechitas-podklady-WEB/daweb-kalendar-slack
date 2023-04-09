@@ -10,13 +10,13 @@ import { sendEmail } from './utilities/sendEmail'
 
 const allCalendarEvents = await getAllCalendarEvents()
 
-const tomorrowMorning = new Date()
-tomorrowMorning.setHours(0, 0, 0, 0)
-const afterWeek = new Date(tomorrowMorning)
-afterWeek.setDate(afterWeek.getDate() + 7)
+const weekStart = new Date()
+weekStart.setHours(0, 0, 0, 0)
+const weekEnd = new Date(weekStart)
+weekEnd.setDate(weekEnd.getDate() + 7)
 
 const futureCalendarEvents = filterFutureCalendarEvents(
-	tomorrowMorning,
+	weekStart,
 	allCalendarEvents,
 )
 
@@ -24,7 +24,7 @@ if (futureCalendarEvents.length === 0) {
 	console.log('Notning in the future. Bye.')
 	exit(0)
 }
-const weekEvents = filterPastCalendarEvents(afterWeek, futureCalendarEvents)
+const weekEvents = filterPastCalendarEvents(weekEnd, futureCalendarEvents)
 
 const firstCalendarEventDate = new Date(
 	allCalendarEvents[0].date.year,
@@ -35,8 +35,7 @@ const firstCalendarEventDate = new Date(
 )
 
 const daysBetweenFirstCalendarEventAndNow = Math.floor(
-	(tomorrowMorning.getTime() - firstCalendarEventDate.getTime()) /
-		(1000 * 3600 * 24),
+	(weekStart.getTime() - firstCalendarEventDate.getTime()) / (1000 * 3600 * 24),
 )
 console.log(daysBetweenFirstCalendarEventAndNow)
 const weekNumber = Math.floor(daysBetweenFirstCalendarEventAndNow / 7) + 1
@@ -55,12 +54,9 @@ const emailHtml = await renderWeeklyEmail(
 	previewImageUrl,
 )
 await fs.writeFile(
-	`emails/${tomorrowMorning.getFullYear()}-${(tomorrowMorning.getMonth() + 1)
+	`emails/${weekStart.getFullYear()}-${(weekStart.getMonth() + 1)
 		.toString()
-		.padStart(2, '0')}-${tomorrowMorning
-		.getDate()
-		.toString()
-		.padStart(2, '0')}.html`,
+		.padStart(2, '0')}-${weekStart.getDate().toString().padStart(2, '0')}.html`,
 	emailHtml,
 	{ encoding: 'utf8' },
 )
