@@ -1,8 +1,11 @@
+import fs from 'fs/promises'
 import { exit } from 'process'
+import { createPreviewImageUrl } from './utilities/createPreviewImageUrl'
 import { createSlideUrl } from './utilities/createSlideUrl'
 import { filterFutureCalendarEvents } from './utilities/filterFutureCalendarEvents'
 import { filterPastCalendarEvents } from './utilities/filterPastCalendarEvents'
 import { getAllCalendarEvents } from './utilities/getAllCalendarEvents'
+import { renderWeeklyEmail } from './utilities/renderWeeklyEmail'
 
 const allCalendarEvents = await getAllCalendarEvents()
 
@@ -30,16 +33,31 @@ const firstCalendarEventDate = new Date(
 	allCalendarEvents[0].date.minute,
 )
 
-console.log(allCalendarEvents[0])
-console.log(tomorrowMorning, firstCalendarEventDate)
 const daysBetweenFirstCalendarEventAndNow = Math.floor(
 	(tomorrowMorning.getTime() - firstCalendarEventDate.getTime()) /
 		(1000 * 3600 * 24),
 )
 console.log(daysBetweenFirstCalendarEventAndNow)
-const batchNumber = Math.floor(daysBetweenFirstCalendarEventAndNow / 7) + 1
+const weekNumber = Math.floor(daysBetweenFirstCalendarEventAndNow / 7) + 1
 
-const slideUrl = createSlideUrl(`${batchNumber}. týdeník`)
+const slideUrl = createSlideUrl(`${weekNumber}. týdeník`)
+const previewImageUrl = createPreviewImageUrl(slideUrl)
 console.log(slideUrl)
 
 console.log(weekEvents)
+
+const emailHtml = await renderWeeklyEmail(
+	weekNumber,
+	weekEvents,
+	previewImageUrl,
+)
+await fs.writeFile(
+	`emails/${tomorrowMorning.getFullYear()}-${(tomorrowMorning.getMonth() + 1)
+		.toString()
+		.padStart(2, '0')}-${tomorrowMorning
+		.getDate()
+		.toString()
+		.padStart(2, '0')}.html`,
+	emailHtml,
+	{ encoding: 'utf8' },
+)
