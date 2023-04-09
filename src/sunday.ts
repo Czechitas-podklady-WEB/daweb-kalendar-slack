@@ -66,7 +66,7 @@ await fs.writeFile(
 )
 
 await sendEmail(
-	'chalupa.filip@gmail.com, filip0150@seznam.cz', // @TODO: add nikol.hanzelkova@czechitas.cz
+	'nikol.hanzelkova@czechitas.cz, chalupa.filip@gmail.com',
 	`Digitální akademie: Web Praha, jaro 2023 - ${weekNumber}. Týdeník`,
 	`${weekNumber}. týden`,
 	emailHtml,
