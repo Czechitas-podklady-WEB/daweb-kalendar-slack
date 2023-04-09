@@ -1,10 +1,10 @@
 import { sheets as s } from '@googleapis/sheets'
 import dotenv from 'dotenv'
 import { exit } from 'process'
-import { createPreviewImageUrl } from './createPreviewImageUrl'
-import { createSlideUrl } from './createSlideUrl'
-import { knownSlackUsers } from './knownSlackUsers'
-import { updateWebsiteSlideUrl } from './updateWebsiteSlideUrl'
+import { createPreviewImageUrl } from './utilities/createPreviewImageUrl'
+import { createSlideUrl } from './utilities/createSlideUrl'
+import { knownSlackUsers } from './utilities/knownSlackUsers'
+import { updateWebsiteSlideUrl } from './utilities/updateWebsiteSlideUrl'
 
 dotenv.config()
 
