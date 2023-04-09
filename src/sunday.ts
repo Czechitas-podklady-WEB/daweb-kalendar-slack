@@ -40,9 +40,8 @@ const daysBetweenFirstCalendarEventAndNow = Math.floor(
 console.log(daysBetweenFirstCalendarEventAndNow)
 const weekNumber = Math.floor(daysBetweenFirstCalendarEventAndNow / 7) + 1
 
-const slideUrl = createSlideUrl(`${weekNumber}. týdeník`)
+const slideUrl = createSlideUrl('DA: Web', `${weekNumber}. týden`)
 const previewImageUrl = createPreviewImageUrl(slideUrl)
-console.log(slideUrl)
 
 console.log(weekEvents)
 
