@@ -24,12 +24,15 @@ if (activeEvent === undefined) {
 	exit(0)
 }
 
+const slideUrl = createCalenderEventSlideUrl(activeEvent)
+
 if (
 	activeEvent.date.year !== todayMorning.getFullYear() ||
 	activeEvent.date.month !== todayMorning.getMonth() + 1 ||
 	activeEvent.date.day !== todayMorning.getDate()
 ) {
 	console.log('No active event scheduled for today.')
+	await updateWebsiteSlideUrl(slideUrl)
 	exit(0)
 }
 
@@ -38,7 +41,7 @@ let message = `Dnes, *${activeEvent.date.day}. ${activeEvent.date.month}. ${
 }* v *${activeEvent.date.hour}:${activeEvent.date.minute
 	.toString()
 	.padStart(2, '0')}* začíná další lekce.
-Plánované téma je *${activeEvent.title.replaceAll('\n', ', ')}*.`
+	Plánované téma je *${activeEvent.title.replaceAll('\n', ', ')}*.`
 
 const lecturer = activeEvent.lecturer
 	?.split(', ')
@@ -74,8 +77,6 @@ if (activeEvent.type === 'online') {
 	}
 }
 
-const slideUrl = createCalenderEventSlideUrl(activeEvent)
-
 const previewImageUrl = createPreviewImageUrl(slideUrl)
 
 console.log('Message:')
@@ -100,5 +101,3 @@ await sendSlackMessage({
 		},
 	],
 })
-
-await updateWebsiteSlideUrl(slideUrl)
