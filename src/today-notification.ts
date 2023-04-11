@@ -26,13 +26,14 @@ if (activeEvent === undefined) {
 
 const slideUrl = createCalenderEventSlideUrl(activeEvent)
 
+await updateWebsiteSlideUrl(slideUrl)
+
 if (
 	activeEvent.date.year !== todayMorning.getFullYear() ||
 	activeEvent.date.month !== todayMorning.getMonth() + 1 ||
 	activeEvent.date.day !== todayMorning.getDate()
 ) {
 	console.log('No active event scheduled for today.')
-	await updateWebsiteSlideUrl(slideUrl)
 	exit(0)
 }
 
