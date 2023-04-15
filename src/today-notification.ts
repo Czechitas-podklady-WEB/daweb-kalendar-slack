@@ -42,7 +42,7 @@ let message = `Dnes, *${activeEvent.date.day}. ${activeEvent.date.month}. ${
 }* v *${activeEvent.date.hour}:${activeEvent.date.minute
 	.toString()
 	.padStart(2, '0')}* začíná další lekce.
-	Plánované téma je *${activeEvent.title.replaceAll('\n', ', ')}*.`
+Plánované téma je *${activeEvent.title.replaceAll('\n', ', ')}*.`
 
 const lecturer = activeEvent.lecturer
 	?.split(', ')
