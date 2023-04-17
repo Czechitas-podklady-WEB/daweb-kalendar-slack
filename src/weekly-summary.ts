@@ -5,8 +5,11 @@ import { createSlideUrl } from './utilities/createSlideUrl'
 import { filterFutureCalendarEvents } from './utilities/filterFutureCalendarEvents'
 import { filterPastCalendarEvents } from './utilities/filterPastCalendarEvents'
 import { getAllCalendarEvents } from './utilities/getAllCalendarEvents'
+import { getSmtpConfiguration } from './utilities/getConfiguration'
 import { renderWeeklyEmail } from './utilities/renderWeeklyEmail'
 import { sendEmail } from './utilities/sendEmail'
+
+const { weeklySummaryEmailRecipients } = getSmtpConfiguration()
 
 const allCalendarEvents = await getAllCalendarEvents()
 
@@ -62,7 +65,7 @@ await fs.writeFile(
 )
 
 await sendEmail(
-	'nikol.hanzelkova@czechitas.cz, chalupa.filip@gmail.com',
+	weeklySummaryEmailRecipients,
 	`Digitální akademie: Web Praha, jaro 2023 - ${weekNumber}. Týdeník`,
 	`${weekNumber}. týden`,
 	emailHtml,

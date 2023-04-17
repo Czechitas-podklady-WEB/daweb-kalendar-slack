@@ -29,6 +29,8 @@ export const getSmtpConfiguration = () => {
 	const port = parseInt(process.env.SMTP_PORT ?? '', 10)
 	const user = process.env.SMTP_USER
 	const password = process.env.SMTP_PASSWORD
+	const weeklySummaryEmailRecipients =
+		process.env.WEEKLY_SUMMARY_EMAIL_RECIPIENTS ?? ''
 
 	if (!host) {
 		throw new Error('Missing SMTP_HOST environment variable.')
@@ -48,5 +50,6 @@ export const getSmtpConfiguration = () => {
 		port,
 		user,
 		password,
+		weeklySummaryEmailRecipients,
 	}
 }
