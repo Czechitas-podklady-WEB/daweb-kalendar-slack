@@ -19,6 +19,10 @@ export const sendEmail = async (
 	text: string,
 	html: string,
 ) => {
+	if (to === '') {
+		console.warn('Empty recipients. Skipping.')
+		return
+	}
 	await transporter.sendMail({
 		from: '"Info" <info@czechitas-podklady.cz>',
 		to,
