@@ -51,7 +51,7 @@
 			padding-top: 0px !important; } @media only screen and (min-width: 620px) {
 			#u_content_image_3 { margin-top: 32px !important; } } hr { height: 1px;
 			display: block; margin: 0; background-color: currentColor; opacity: 0.1;
-			border: none;}
+			border: none;} a { color: #e6007e !important; }
 		</style>
 
 		<!--[if !mso]><!-->
@@ -442,7 +442,10 @@
 																				font-size: 16px;
 																				line-height: 22.4px;
 																			"
-																			><strong>{{title}}</strong></span>
+																			>{{locationType type 'short'}}<strong>
+																					{{title}}
+																				</strong>-
+																				{{locationType type 'long'}}</span>
 																		</p>
 																		<p
 																			style='line-height: 140%; font-size: 14px; padding-bottom: 0.5em;'
@@ -468,6 +471,22 @@
 																			"
 																			>Lektor: {{lecturer}}</span>
 																		</p>
+																		{{#if link}}
+																			<p
+																				style='line-height: 140%; font-size: 14px;'
+																			>
+																				<span
+																					style="
+																				font-family: 'Open Sans', sans-serif;
+																				font-size: 14px;
+																				line-height: 19.6px;
+																			"
+																				>Odkaz pro připojení:
+																					<strong>{{shortLink
+																							link
+																						}}</strong></span>
+																			</p>
+																		{{/if}}
 																		<!-- @TODO: místo konání -->
 																	{{/each}}
 																	<p style='line-height: 140%; font-size: 14px'>

@@ -21,6 +21,35 @@ Handlebars.registerHelper('prettyDate', (date: CalendarEvent['date']) => {
 	return `${raw.substring(0, 1).toUpperCase()}${raw.substring(1)}`
 })
 
+Handlebars.registerHelper('shortLink', (link: string) => {
+	const url = Handlebars.escapeExpression(link)
+	const text = link.includes('zoom.us/') ? 'Zoom' : link
+
+	return new Handlebars.SafeString(`<a href="${url}">${text}</a>`)
+})
+
+Handlebars.registerHelper(
+	'locationType',
+	(type: CalendarEvent['type'], variant: 'short' | 'long') => {
+		if (type === 'hybrid') {
+			if (variant === 'short') {
+				return '🏰'
+			}
+			return 'hybrid 🏰'
+		}
+		if (type === 'online') {
+			if (variant === 'short') {
+				return '💻'
+			}
+			return 'online 💻'
+		}
+		if (variant === 'short') {
+			return '🤹‍♀️'
+		}
+		return `${type} 🤹‍♀️`
+	},
+)
+
 export const renderWeeklyEmail = async (
 	weekNumber: number,
 	calendarEvents: CalendarEvent[],
