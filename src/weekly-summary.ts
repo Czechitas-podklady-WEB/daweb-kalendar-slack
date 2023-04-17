@@ -66,7 +66,7 @@ await fs.writeFile(
 
 await sendEmail(
 	weeklySummaryEmailRecipients,
-	`Digitální akademie: Web Praha, jaro 2023 - ${weekNumber}. Týdeník`,
+	`Digitální akademie: Web Praha, jaro 2023 - ${weekNumber - 1}. Týdeník`,
 	`${weekNumber}. týden`,
 	emailHtml,
 )
