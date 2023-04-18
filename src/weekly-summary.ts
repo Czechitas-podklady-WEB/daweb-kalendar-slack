@@ -25,7 +25,7 @@ const futureCalendarEvents = filterFutureCalendarEvents(
 )
 
 if (futureCalendarEvents.length === 0) {
-	console.log('Notning in the future. Bye.')
+	console.log('Nothing in the future. Bye.')
 	exit(0)
 }
 const weekEvents = filterPastCalendarEvents(weekEnd, futureCalendarEvents)
@@ -41,7 +41,7 @@ const firstCalendarEventDate = new Date(
 const daysBetweenFirstCalendarEventAndNow = Math.floor(
 	(weekStart.getTime() - firstCalendarEventDate.getTime()) / (1000 * 3600 * 24),
 )
-const weekNumber = Math.floor(daysBetweenFirstCalendarEventAndNow / 7) + 1
+const weekNumber = Math.floor(daysBetweenFirstCalendarEventAndNow / 7) + 2
 
 const slideUrl = createSlideUrl(
 	`${weekNumber}. týden`,

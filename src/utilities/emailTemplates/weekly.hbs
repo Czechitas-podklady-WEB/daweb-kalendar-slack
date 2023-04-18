@@ -458,17 +458,19 @@
 																			"
 																			><i>{{prettyDate date}}</i></span>
 																		</p>
-																		<p
-																			style='line-height: 140%; font-size: 14px;'
-																		>
-																			<span
-																				style="
+																		{{#if lecturer}}
+																			<p
+																				style='line-height: 140%; font-size: 14px;'
+																			>
+																				<span
+																					style="
 																				font-family: 'Open Sans', sans-serif;
 																				font-size: 14px;
 																				line-height: 19.6px;
 																			"
-																			>Lektor: {{lecturer}}</span>
-																		</p>
+																				>Lektor: {{lecturer}}</span>
+																			</p>
+																		{{/if}}
 																		{{#if link}}
 																			<p
 																				style='line-height: 140%; font-size: 14px;'

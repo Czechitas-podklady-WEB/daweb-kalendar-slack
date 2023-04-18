@@ -43,6 +43,12 @@ Handlebars.registerHelper(
 			}
 			return 'online 💻'
 		}
+		if (type === 'prezenčně') {
+			if (variant === 'short') {
+				return '🚶'
+			}
+			return 'prezenčně 🚶'
+		}
 		if (variant === 'short') {
 			return '🤹‍♀️'
 		}
