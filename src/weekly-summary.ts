@@ -15,6 +15,7 @@ const allCalendarEvents = await getAllCalendarEvents()
 
 const weekStart = new Date()
 weekStart.setHours(0, 0, 0, 0)
+weekStart.setDate(weekStart.getDate() + (7 - weekStart.getDay()) + 1) // Nearest monday
 const weekEnd = new Date(weekStart)
 weekEnd.setDate(weekEnd.getDate() + 7)
 
@@ -40,7 +41,6 @@ const firstCalendarEventDate = new Date(
 const daysBetweenFirstCalendarEventAndNow = Math.floor(
 	(weekStart.getTime() - firstCalendarEventDate.getTime()) / (1000 * 3600 * 24),
 )
-console.log(daysBetweenFirstCalendarEventAndNow)
 const weekNumber = Math.floor(daysBetweenFirstCalendarEventAndNow / 7) + 1
 
 const slideUrl = createSlideUrl(
