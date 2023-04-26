@@ -1,6 +1,7 @@
 import fs from 'fs/promises'
 import Handlebars from 'handlebars'
 import { CalendarEvent } from './CalendarEvent'
+import { fullUrlToShortText } from './fullUrlToShortText'
 
 Handlebars.registerHelper('prettyDate', (date: CalendarEvent['date']) => {
 	const d = new Date(
@@ -23,7 +24,7 @@ Handlebars.registerHelper('prettyDate', (date: CalendarEvent['date']) => {
 
 Handlebars.registerHelper('shortLink', (link: string) => {
 	const url = Handlebars.escapeExpression(link)
-	const text = link.includes('zoom.us/') ? 'Zoom' : link
+	const text = fullUrlToShortText(link)
 
 	return new Handlebars.SafeString(`<a href="${url}">${text}</a>`)
 })

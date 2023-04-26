@@ -2,6 +2,7 @@ import { exit } from 'process'
 import { createCalenderEventSlideUrl } from './utilities/createCalenderEventSlideUrl'
 import { createPreviewImageUrl } from './utilities/createPreviewImageUrl'
 import { filterFutureCalendarEvents } from './utilities/filterFutureCalendarEvents'
+import { fullUrlToShortText } from './utilities/fullUrlToShortText'
 import { getAllCalendarEvents } from './utilities/getAllCalendarEvents'
 import { knownSlackUsers } from './utilities/knownSlackUsers'
 import { sendSlackMessage } from './utilities/sendSlackMessage'
@@ -58,23 +59,26 @@ const lecturer = activeEvent.lecturer
 if (lecturer) {
 	message += `\nVýuku povede *${lecturer}*.`
 }
+const link = activeEvent.link
+	? `<${activeEvent.link}|${fullUrlToShortText(activeEvent.link)}>`
+	: null
 if (activeEvent.type === 'online') {
-	message += `\nLekce bude probíhat *pouze online*`
+	message += `\nLekce bude probíhat *pouze online 💻*`
 
-	if (activeEvent.link) {
-		message += ` a odkaz pro připojení najdeš zde: ${activeEvent.link}`
+	if (link) {
+		message += ` a odkaz pro připojení najdeš zde: ${link}`
 	}
 	message += '.'
 } else {
 	if (activeEvent.type) {
 		message += `\nLekce bude probíhat ${
 			activeEvent.type === 'hybrid'
-				? '*hybridně*'
+				? '*hybridně 🏰*'
 				: `v režimu *${activeEvent.type}*`
 		}.`
 	}
-	if (activeEvent.link) {
-		message += `\nOdkaz pro připojení online: ${activeEvent.link}.`
+	if (link) {
+		message += `\nOdkaz pro připojení online: ${link}.`
 	}
 }
 
