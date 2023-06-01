@@ -1,6 +1,6 @@
 # DA: Web
 
-Skript na přeposílání událostí z kalendáře v Google sheetu do Slacku.
+Skript na přeposílání událostí z kalendáře v Google sheetu do Slacku a do e-mailu.
 
 ## Ukázka výstupu
 
