@@ -25,12 +25,12 @@ export const getAllCalendarEvents = async () => {
 	const cleanData: CalendarEvent[] = []
 
 	sheet.data.values?.forEach((row) => {
-		const date = row[dateColumnIndex] ?? ''
-		const time = row[timeColumnIndex] ?? ''
-		const title = row[titleColumnIndex] ?? ''
-		const lecturer = row[lecturerColumnIndex] ?? ''
-		const type = row[typeColumnIndex] ?? ''
-		const link = row[linkColumnIndex] ?? ''
+		const date = (row[dateColumnIndex] ?? '').trim()
+		const time = (row[timeColumnIndex] ?? '').trim()
+		const title = (row[titleColumnIndex] ?? '').trim()
+		const lecturer = (row[lecturerColumnIndex] ?? '').trim()
+		const type = (row[typeColumnIndex] ?? '').trim()
+		const link = (row[linkColumnIndex] ?? '').trim()
 
 		if (date && time && title) {
 			const [day, month, year] = date.split('. ')
