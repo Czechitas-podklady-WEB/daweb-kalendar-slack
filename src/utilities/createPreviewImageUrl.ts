@@ -1,6 +1,10 @@
+import { getConfiguration } from './getConfiguration'
+
 export const createPreviewImageUrl = (slideUrl: string) => {
+	const { apiflashAccessKey } = getConfiguration()
+
 	const url = new URL('https://api.apiflash.com/v1/urltoimage')
-	url.searchParams.set('access_key', '051686ce27cd408ca39cc01a9b187cb3')
+	url.searchParams.set('access_key', apiflashAccessKey)
 	url.searchParams.set('format', 'jpeg')
 	url.searchParams.set('width', '1920')
 	url.searchParams.set('height', '1080')

@@ -6,6 +6,7 @@ export const getConfiguration = () => {
 	const spreadsheetId = process.env.SPREADSHEET_ID
 	const apiKey = process.env.API_KEY
 	const webhookUrl = process.env.WEBHOOK_URL
+	const apiflashAccessKey = process.env.APIFLASH_ACCESS_KEY
 
 	if (!spreadsheetId) {
 		throw new Error('Missing SPREADSHEET_ID environment variable.')
@@ -16,11 +17,15 @@ export const getConfiguration = () => {
 	if (!webhookUrl) {
 		throw new Error('Missing WEBHOOK_URL environment variable.')
 	}
+	if (!apiflashAccessKey) {
+		throw new Error('Missing APIFLASH_ACCESS_KEY environment variable.')
+	}
 
 	return {
 		spreadsheetId,
 		apiKey,
 		webhookUrl,
+		apiflashAccessKey,
 	}
 }
 
