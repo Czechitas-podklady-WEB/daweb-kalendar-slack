@@ -33,3 +33,4 @@ jobs:
           SMTP_USER: ${{ vars.SMTP_USER }}
           SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
           WEEKLY_SUMMARY_EMAIL_RECIPIENTS: ${{ vars.WEEKLY_SUMMARY_EMAIL_RECIPIENTS }}
+          APIFLASH_ACCESS_KEY: ${{ secrets.APIFLASH_ACCESS_KEY }}
