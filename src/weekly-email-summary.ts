@@ -2,46 +2,18 @@ import fs from 'fs/promises'
 import { exit } from 'process'
 import { createPreviewImageUrl } from './utilities/createPreviewImageUrl'
 import { createSlideUrl } from './utilities/createSlideUrl'
-import { filterFutureCalendarEvents } from './utilities/filterFutureCalendarEvents'
-import { filterPastCalendarEvents } from './utilities/filterPastCalendarEvents'
-import { getAllCalendarEvents } from './utilities/getAllCalendarEvents'
 import { getSmtpConfiguration } from './utilities/getConfiguration'
+import { getNextWeek } from './utilities/getNextWeek'
 import { renderWeeklyEmail } from './utilities/renderWeeklyEmail'
 import { sendEmail } from './utilities/sendEmail'
 
 const { weeklySummaryEmailRecipients } = getSmtpConfiguration()
+const { weekNumber, weekStart, weekEvents } = await getNextWeek()
 
-const allCalendarEvents = await getAllCalendarEvents()
-
-const weekStart = new Date()
-weekStart.setHours(0, 0, 0, 0)
-weekStart.setDate(weekStart.getDate() + (7 - weekStart.getDay()) + 1) // Nearest monday
-const weekEnd = new Date(weekStart)
-weekEnd.setDate(weekEnd.getDate() + 7)
-
-const futureCalendarEvents = filterFutureCalendarEvents(
-	weekStart,
-	allCalendarEvents,
-)
-
-if (futureCalendarEvents.length === 0) {
-	console.log('Nothing in the future. Bye.')
+if (weekEvents.length === 0) {
+	console.log('No events found. Bye.')
 	exit(0)
 }
-const weekEvents = filterPastCalendarEvents(weekEnd, futureCalendarEvents)
-
-const firstCalendarEventDate = new Date(
-	allCalendarEvents[0].date.year,
-	allCalendarEvents[0].date.month - 1,
-	allCalendarEvents[0].date.day,
-	allCalendarEvents[0].date.hour,
-	allCalendarEvents[0].date.minute,
-)
-
-const daysBetweenFirstCalendarEventAndNow = Math.floor(
-	(weekStart.getTime() - firstCalendarEventDate.getTime()) / (1000 * 3600 * 24),
-)
-const weekNumber = Math.floor(daysBetweenFirstCalendarEventAndNow / 7) + 2
 
 const slideUrl = createSlideUrl(
 	`${weekNumber}. týden`,

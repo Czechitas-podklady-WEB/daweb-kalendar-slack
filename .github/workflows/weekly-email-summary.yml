@@ -1,4 +1,4 @@
-name: Weekly summary
+name: Weekly email summary
 
 on:
   schedule:
@@ -23,7 +23,7 @@ jobs:
       - name: Install dependencies
         run: npm ci
       - name: Run
-        run: npm run weekly-summary
+        run: npm run weekly-email-summary
         env:
           API_KEY: ${{ secrets.API_KEY }}
           WEBHOOK_URL: ${{ secrets.WEBHOOK_URL }}

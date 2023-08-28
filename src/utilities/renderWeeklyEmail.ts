@@ -2,6 +2,7 @@ import fs from 'fs/promises'
 import Handlebars from 'handlebars'
 import { CalendarEvent } from './CalendarEvent'
 import { fullUrlToShortText } from './fullUrlToShortText'
+import { locationType } from './locationType'
 
 Handlebars.registerHelper('prettyDate', (date: CalendarEvent['date']) => {
 	const d = new Date(
@@ -29,33 +30,7 @@ Handlebars.registerHelper('shortLink', (link: string) => {
 	return new Handlebars.SafeString(`<a href="${url}">${text}</a>`)
 })
 
-Handlebars.registerHelper(
-	'locationType',
-	(type: CalendarEvent['type'], variant: 'short' | 'long') => {
-		if (type === 'hybrid') {
-			if (variant === 'short') {
-				return '🏰'
-			}
-			return 'hybrid 🏰'
-		}
-		if (type === 'online') {
-			if (variant === 'short') {
-				return '💻'
-			}
-			return 'online 💻'
-		}
-		if (type === 'prezenčně') {
-			if (variant === 'short') {
-				return '🚶'
-			}
-			return 'prezenčně 🚶'
-		}
-		if (variant === 'short') {
-			return '🤹‍♀️'
-		}
-		return `${type} 🤹‍♀️`
-	},
-)
+Handlebars.registerHelper('locationType', locationType)
 
 export const renderWeeklyEmail = async (
 	weekNumber: number,

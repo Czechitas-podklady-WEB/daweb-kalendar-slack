@@ -4,7 +4,7 @@ import { createPreviewImageUrl } from './utilities/createPreviewImageUrl'
 import { filterFutureCalendarEvents } from './utilities/filterFutureCalendarEvents'
 import { fullUrlToShortText } from './utilities/fullUrlToShortText'
 import { getAllCalendarEvents } from './utilities/getAllCalendarEvents'
-import { knownSlackUsers } from './utilities/knownSlackUsers'
+import { mrkdwnLecturer } from './utilities/mrkdwnLecturer'
 import { sendSlackMessage } from './utilities/sendSlackMessage'
 import { updateWebsiteSlideUrl } from './utilities/updateWebsiteSlideUrl'
 
@@ -45,16 +45,7 @@ let message = `Dnes, *${activeEvent.date.day}. ${activeEvent.date.month}. ${
 	.padStart(2, '0')}* začíná další lekce.
 Plánované téma je *${activeEvent.title.replaceAll('\n', ', ')}*.`
 
-const lecturer = activeEvent.lecturer
-	?.split(', ')
-	.map((name) => {
-		const lecturer = knownSlackUsers.find((user) => user.name === name)
-		if (lecturer) {
-			return `<@${lecturer.memberId}>`
-		}
-		return name
-	})
-	.join(', ')
+const lecturer = mrkdwnLecturer(activeEvent.lecturer)
 
 if (lecturer) {
 	message += `\nVýuku povede *${lecturer}*.`

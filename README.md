@@ -26,8 +26,14 @@ Start je doporučen provádět každý den ráno. Nejpozději v čase před zač
 npm run today-notification
 ```
 
+Pro vygenerování souhrnu na další týden.
+
+```bash
+npm run weekly-notification
+```
+
 A pro nedělní vygenerování týdeníku.
 
 ```bash
-npm run weekly-summary
+npm run weekly-email-summary
 ```

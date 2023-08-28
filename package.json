@@ -6,7 +6,8 @@
 	"type": "module",
 	"scripts": {
 		"today-notification": "tsx src/today-notification.ts",
-		"weekly-summary": "tsx src/weekly-summary.ts"
+		"weekly-email-summary": "tsx src/weekly-email-summary.ts",
+		"weekly-notification": "tsx src/weekly-notification.ts"
 	},
 	"keywords": [],
 	"author": "",

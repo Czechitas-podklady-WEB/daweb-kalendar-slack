@@ -1,0 +1,36 @@
+name: Weekly notification
+
+on:
+  schedule:
+    - cron: '15 19 * * 0'
+  workflow_dispatch:
+
+concurrency:
+  group: 'cron'
+  cancel-in-progress: true
+
+jobs:
+  cron:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Node.js setup
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: 'npm'
+      - name: Install dependencies
+        run: npm ci
+      - name: Run
+        run: npm run weekly-notification
+        env:
+          API_KEY: ${{ secrets.API_KEY }}
+          WEBHOOK_URL: ${{ secrets.WEBHOOK_URL }}
+          SPREADSHEET_ID: ${{ secrets.SPREADSHEET_ID }}
+          SMTP_HOST: ${{ vars.SMTP_HOST }}
+          SMTP_PORT: ${{ vars.SMTP_PORT }}
+          SMTP_USER: ${{ vars.SMTP_USER }}
+          SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
+          WEEKLY_SUMMARY_EMAIL_RECIPIENTS: ${{ vars.WEEKLY_SUMMARY_EMAIL_RECIPIENTS }}
+          APIFLASH_ACCESS_KEY: ${{ secrets.APIFLASH_ACCESS_KEY }}
