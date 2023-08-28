@@ -64,9 +64,14 @@ await fs.writeFile(
 	{ encoding: 'utf8' },
 )
 
+const currentYear = weekStart.getFullYear()
+const semester = weekStart.getMonth() < 7 ? 'jaro' : 'podzim'
+
 await sendEmail(
 	weeklySummaryEmailRecipients,
-	`Digitální akademie: Web Praha, podzim 2023 - ${weekNumber - 1}. Týdeník`,
+	`Digitální akademie: Web Praha, ${semester} ${currentYear} - ${
+		weekNumber - 1
+	}. týdeník`,
 	`${weekNumber}. týden`,
 	emailHtml,
 )
