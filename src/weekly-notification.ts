@@ -7,7 +7,7 @@ import { locationType } from './utilities/locationType'
 import { mrkdwnLecturer } from './utilities/mrkdwnLecturer'
 import { sendSlackMessage } from './utilities/sendSlackMessage'
 
-const { weekNumber, weekStart, weekEvents } = await getNextWeek()
+const { weekNumber, weekStart, weekEnd, weekEvents } = await getNextWeek()
 
 console.log(weekEvents)
 
@@ -16,15 +16,13 @@ if (weekEvents.length === 0) {
 	exit(0)
 }
 
-const nextWeekStart = new Date(weekStart)
-nextWeekStart.setDate(nextWeekStart.getDate() + 7)
 const isWeekEndingInSameMonth =
 	weekStart.toLocaleDateString('cs', { month: 'numeric' }) ===
-	nextWeekStart.toLocaleDateString('cs', { month: 'numeric' })
+	weekEnd.toLocaleDateString('cs', { month: 'numeric' })
 const dateRange = `${weekStart.toLocaleDateString('cs', {
 	day: 'numeric',
 	month: isWeekEndingInSameMonth ? undefined : 'long',
-})} až ${nextWeekStart.toLocaleDateString('cs', {
+})} až ${weekEnd.toLocaleDateString('cs', {
 	day: 'numeric',
 	month: 'long',
 	year: 'numeric',

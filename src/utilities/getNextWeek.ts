@@ -11,7 +11,7 @@ export const getNextWeek = async () => {
 		weekStart.getDate() + (7 - ((weekStart.getDay() - 1 + 7) % 7)),
 	) // Nearest monday
 	const weekEnd = new Date(weekStart)
-	weekEnd.setDate(weekEnd.getDate() + 7)
+	weekEnd.setDate(weekEnd.getDate() + 6)
 
 	const futureCalendarEvents = filterFutureCalendarEvents(
 		weekStart,
@@ -34,5 +34,5 @@ export const getNextWeek = async () => {
 	)
 	const weekNumber = Math.floor(daysBetweenFirstCalendarEventAndNow / 7) + 2
 
-	return { weekNumber, weekStart, weekEvents }
+	return { weekNumber, weekStart, weekEnd, weekEvents }
 }

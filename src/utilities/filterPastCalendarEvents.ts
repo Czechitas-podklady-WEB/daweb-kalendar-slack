@@ -4,6 +4,8 @@ export const filterPastCalendarEvents = (
 	fromDate: Date,
 	allCalendarEvents: CalendarEvent[],
 ) => {
+	const fromDateNextDay = new Date(fromDate)
+	fromDateNextDay.setDate(fromDateNextDay.getDate() + 1)
 	return allCalendarEvents.filter((event) => {
 		const eventDate = new Date(
 			event.date.year,
@@ -13,6 +15,6 @@ export const filterPastCalendarEvents = (
 			event.date.minute,
 		)
 
-		return fromDate > eventDate
+		return fromDateNextDay > eventDate
 	})
 }
