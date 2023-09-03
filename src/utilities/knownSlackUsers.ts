@@ -35,16 +35,24 @@ export const knownSlackUsers = [
 		name: 'Standa Kosáček',
 		memberId: 'U05PWQNM89F',
 	},
+	{
+		name: 'Kája Dohnal',
+		memberId: 'U05QKCQHE3G',
+	},
+	{
+		name: 'Vašek Smítka',
+		memberId: 'U05PGP01NKX',
+	},
+	// {
+	// 	name: 'Jakub Fišer',
+	// 	memberId: '',
+	// },
 	// {
 	// 	name: 'Petra Drahoňovská',
 	// 	memberId: '',
 	// },
 	// {
 	// 	name: 'Petra Smiga',
-	// 	memberId: '',
-	// },
-	// {
-	// 	name: 'Jakub Fišer',
 	// 	memberId: '',
 	// },
 	// {
