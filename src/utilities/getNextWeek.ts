@@ -7,7 +7,9 @@ export const getNextWeek = async () => {
 
 	const weekStart = new Date()
 	weekStart.setHours(0, 0, 0, 0)
-	weekStart.setDate(weekStart.getDate() + (7 - weekStart.getDay()) + 1) // Nearest monday
+	weekStart.setDate(
+		weekStart.getDate() + (7 - ((weekStart.getDay() - 1 + 7) % 7)),
+	) // Nearest monday
 	const weekEnd = new Date(weekStart)
 	weekEnd.setDate(weekEnd.getDate() + 7)
 
