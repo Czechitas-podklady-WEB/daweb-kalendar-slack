@@ -21,11 +21,11 @@ export const getNextWeek = async () => {
 	const weekEvents = filterPastCalendarEvents(weekEnd, futureCalendarEvents)
 
 	const firstCalendarEventDate = new Date(
-		allCalendarEvents[0].date.year,
-		allCalendarEvents[0].date.month - 1,
-		allCalendarEvents[0].date.day,
-		allCalendarEvents[0].date.hour,
-		allCalendarEvents[0].date.minute,
+		allCalendarEvents[0].dateStartLegacy.year,
+		allCalendarEvents[0].dateStartLegacy.month - 1,
+		allCalendarEvents[0].dateStartLegacy.day,
+		allCalendarEvents[0].dateStartLegacy.hour,
+		allCalendarEvents[0].dateStartLegacy.minute,
 	)
 
 	const daysBetweenFirstCalendarEventAndNow = Math.floor(

@@ -4,7 +4,7 @@ import { CalendarEvent } from './CalendarEvent'
 import { fullUrlToShortText } from './fullUrlToShortText'
 import { locationType } from './locationType'
 
-Handlebars.registerHelper('prettyDate', (date: CalendarEvent['date']) => {
+Handlebars.registerHelper('prettyDate', (date: CalendarEvent['dateStart']) => {
 	const d = new Date(
 		date.year,
 		date.month - 1,

@@ -17,9 +17,11 @@ export const createCalenderEventSlideUrl = (event: CalendarEvent) => {
 		)
 		.join('\n')
 	const meta1 = event.lecturer ?? ''
-	const meta2 = `${event.date.day}. ${event.date.month}. ${event.date.year} ${
-		event.date.hour
-	}:${event.date.minute.toString().padStart(2, '0')}`
+	const meta2 = `${event.dateStartLegacy.day}. ${
+		event.dateStartLegacy.month
+	}. ${event.dateStartLegacy.year} ${
+		event.dateStartLegacy.hour
+	}:${event.dateStartLegacy.minute.toString().padStart(2, '0')}`
 
 	return createSlideUrl(title, meta1, meta2)
 }

@@ -6,7 +6,8 @@ export const getAllCalendarEvents = async () => {
 	const { spreadsheetId, apiKey } = getConfiguration()
 
 	const dateColumnIndex = 2
-	const timeColumnIndex = 3
+	const timeStartColumnIndex = 3
+	const timeEndColumnIndex = 4
 	const titleColumnIndex = 5
 	const lecturerColumnIndex = 7
 	const typeColumnIndex = 8
@@ -25,25 +26,52 @@ export const getAllCalendarEvents = async () => {
 	const cleanData: CalendarEvent[] = []
 
 	sheet.data.values?.forEach((row) => {
-		const date = (row[dateColumnIndex] ?? '').trim()
-		const time = (row[timeColumnIndex] ?? '').trim()
-		const title = (row[titleColumnIndex] ?? '').trim()
-		const lecturer = (row[lecturerColumnIndex] ?? '').trim()
-		const type = (row[typeColumnIndex] ?? '').trim()
-		const link = (row[linkColumnIndex] ?? '').trim()
+		const date: string = (row[dateColumnIndex] ?? '').trim()
+		const timeStart: string = (row[timeStartColumnIndex] ?? '').trim()
+		const timeEnd: string = (row[timeEndColumnIndex] ?? '').trim()
+		const title: string = (row[titleColumnIndex] ?? '').trim()
+		const lecturer: string = (row[lecturerColumnIndex] ?? '').trim()
+		const type: string = (row[typeColumnIndex] ?? '').trim()
+		const link: string = (row[linkColumnIndex] ?? '').trim()
 
-		if (date && time && title) {
+		if (date && timeStart && title) {
 			const [day, month, year] = date.split('. ')
-			const [hour, minute] = time.split(':')
-			if (day && month && year && hour && minute) {
+			const [hourStart, minuteStart] = timeStart.split(':')
+			const [hourEnd, minuteEnd] = timeEnd.split(':')
+			if (day && month && year && hourStart && minuteStart) {
+				const dateStart = new Date(
+					parseInt(year),
+					parseInt(month) - 1,
+					parseInt(day),
+					parseInt(hourStart),
+					parseInt(minuteStart),
+				)
+				const dateEnd =
+					hourEnd && minuteEnd
+						? (() => {
+								const date = new Date(dateStart)
+								date.setHours(parseInt(hourEnd), parseInt(minuteEnd))
+								return date
+						  })()
+						: null
+
 				cleanData.push({
-					date: {
+					dateStart,
+					dateEnd,
+					dateStartLegacy: {
 						year: parseInt(year),
 						month: parseInt(month),
 						day: parseInt(day),
-						hour: parseInt(hour),
-						minute: parseInt(minute),
+						hour: parseInt(hourStart),
+						minute: parseInt(minuteStart),
 					},
+					timeEndLegacy:
+						hourEnd && minuteEnd
+							? {
+									hour: parseInt(hourEnd),
+									minute: parseInt(minuteEnd),
+							  }
+							: null,
 					title,
 					lecturer,
 					type,

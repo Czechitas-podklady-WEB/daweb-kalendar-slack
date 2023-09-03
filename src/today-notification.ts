@@ -30,19 +30,29 @@ const slideUrl = createCalenderEventSlideUrl(activeEvent)
 await updateWebsiteSlideUrl(slideUrl)
 
 if (
-	activeEvent.date.year !== todayMorning.getFullYear() ||
-	activeEvent.date.month !== todayMorning.getMonth() + 1 ||
-	activeEvent.date.day !== todayMorning.getDate()
+	activeEvent.dateStartLegacy.year !== todayMorning.getFullYear() ||
+	activeEvent.dateStartLegacy.month !== todayMorning.getMonth() + 1 ||
+	activeEvent.dateStartLegacy.day !== todayMorning.getDate()
 ) {
 	console.log('No active event scheduled for today.')
 	exit(0)
 }
 
-let message = `Dnes, *${activeEvent.date.day}. ${activeEvent.date.month}. ${
-	activeEvent.date.year
-}* v *${activeEvent.date.hour}:${activeEvent.date.minute
-	.toString()
-	.padStart(2, '0')}* začíná další lekce.
+let message = `Dnes, *${activeEvent.dateStart.toLocaleDateString('cs', {
+	day: 'numeric',
+	month: 'numeric',
+	year: 'numeric',
+})}* bude od *${activeEvent.dateStart.toLocaleTimeString('cs', {
+	hour: 'numeric',
+	minute: 'numeric',
+})}*${
+	activeEvent.dateEnd
+		? ` do *${activeEvent.dateEnd.toLocaleTimeString('cs', {
+				hour: 'numeric',
+				minute: 'numeric',
+		  })}*`
+		: ''
+} probíhat další lekce.
 Plánované téma je *${activeEvent.title.replaceAll('\n', ', ')}*.`
 
 const lecturer = mrkdwnLecturer(activeEvent.lecturer)

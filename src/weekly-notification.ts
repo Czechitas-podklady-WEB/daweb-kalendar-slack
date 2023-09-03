@@ -59,13 +59,8 @@ await sendSlackMessage({
 			type: 'divider',
 		},
 		...weekEvents.map((event) => {
-			const date = new Date(
-				event.date.year,
-				event.date.month - 1,
-				event.date.day,
-				event.date.hour,
-				event.date.minute,
-			)
+			const { dateStart, dateEnd } = event
+
 			const lecturer = mrkdwnLecturer(event.lecturer)
 
 			return {
@@ -76,14 +71,23 @@ await sendSlackMessage({
 						event.title
 					}* - ${locationType(event.type, 'long')}
 > _${capitalizeFirstLetter(
-						date.toLocaleDateString('cs', {
+						dateStart.toLocaleDateString('cs', {
 							day: 'numeric',
 							month: 'long',
-							hour: 'numeric',
-							minute: 'numeric',
 							weekday: 'long',
 						}),
-					)}_${
+					)} od ${dateStart.toLocaleTimeString('cs', {
+						hour: 'numeric',
+						minute: 'numeric',
+					})}${
+						dateEnd
+							? ' do ' +
+							  dateEnd.toLocaleTimeString('cs', {
+									hour: 'numeric',
+									minute: 'numeric',
+							  })
+							: ''
+					}_${
 						lecturer
 							? `
 > Lektor: ${lecturer}`
