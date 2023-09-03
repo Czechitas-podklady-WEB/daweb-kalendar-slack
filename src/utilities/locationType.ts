@@ -16,7 +16,7 @@ export const locationType = (
 		}
 		return 'online 💻'
 	}
-	if (type === 'prezenčně') {
+	if (type === 'prezenčně' || type === 'prezenční') {
 		if (variant === 'short') {
 			return '🚶'
 		}
