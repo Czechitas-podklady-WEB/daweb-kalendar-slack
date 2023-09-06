@@ -1,4 +1,4 @@
-# DA: Web
+# Kalendář Slack
 
 Skript na přeposílání událostí z kalendáře v Google sheetu do Slacku a do e-mailu.
 

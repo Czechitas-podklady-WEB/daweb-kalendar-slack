@@ -2,12 +2,16 @@ import fs from 'fs/promises'
 import { exit } from 'process'
 import { createPreviewImageUrl } from './utilities/createPreviewImageUrl'
 import { createSlideUrl } from './utilities/createSlideUrl'
-import { getSmtpConfiguration } from './utilities/getConfiguration'
+import {
+	getConfiguration,
+	getSmtpConfiguration,
+} from './utilities/getConfiguration'
 import { getNextWeek } from './utilities/getNextWeek'
 import { renderWeeklyEmail } from './utilities/renderWeeklyEmail'
 import { sendEmail } from './utilities/sendEmail'
 
 const { weeklySummaryEmailRecipients } = getSmtpConfiguration()
+const { courseName, courseRegion } = getConfiguration()
 const { weekNumber, weekStart, weekEvents } = await getNextWeek()
 
 if (weekEvents.length === 0) {
@@ -15,10 +19,7 @@ if (weekEvents.length === 0) {
 	exit(0)
 }
 
-const slideUrl = createSlideUrl(
-	`${weekNumber}. týden`,
-	'Digitální akademie: Web',
-)
+const slideUrl = createSlideUrl(`${weekNumber}. týden`, courseName)
 const previewImageUrl = createPreviewImageUrl(slideUrl)
 
 console.log(weekEvents)
@@ -41,7 +42,7 @@ const semester = weekStart.getMonth() < 7 ? 'jaro' : 'podzim'
 
 await sendEmail(
 	weeklySummaryEmailRecipients,
-	`Digitální akademie: Web Praha, ${semester} ${currentYear} - ${
+	`${courseName} ${courseRegion}, ${semester} ${currentYear} - ${
 		weekNumber - 1
 	}. týdeník`,
 	`${weekNumber}. týden`,

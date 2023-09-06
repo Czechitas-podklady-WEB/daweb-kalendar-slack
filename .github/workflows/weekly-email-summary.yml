@@ -34,3 +34,5 @@ jobs:
           SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
           WEEKLY_SUMMARY_EMAIL_RECIPIENTS: ${{ vars.WEEKLY_SUMMARY_EMAIL_RECIPIENTS }}
           APIFLASH_ACCESS_KEY: ${{ secrets.APIFLASH_ACCESS_KEY }}
+          COURSE_NAME: ${{ vars.COURSE_NAME }}
+          COURSE_REGION: ${{ vars.COURSE_REGION }}

@@ -7,6 +7,8 @@ export const getConfiguration = () => {
 	const apiKey = process.env.API_KEY
 	const webhookUrl = process.env.WEBHOOK_URL
 	const apiflashAccessKey = process.env.APIFLASH_ACCESS_KEY
+	const courseName = process.env.COURSE_NAME
+	const courseRegion = process.env.COURSE_REGION
 
 	if (!spreadsheetId) {
 		throw new Error('Missing SPREADSHEET_ID environment variable.')
@@ -20,12 +22,20 @@ export const getConfiguration = () => {
 	if (!apiflashAccessKey) {
 		throw new Error('Missing APIFLASH_ACCESS_KEY environment variable.')
 	}
+	if (!courseName) {
+		throw new Error('Missing COURSE_NAME environment variable.')
+	}
+	if (!courseRegion) {
+		throw new Error('Missing COURSE_REGION environment variable.')
+	}
 
 	return {
 		spreadsheetId,
 		apiKey,
 		webhookUrl,
 		apiflashAccessKey,
+		courseName,
+		courseRegion,
 	}
 }
 
