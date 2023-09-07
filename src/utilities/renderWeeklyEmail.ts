@@ -5,14 +5,7 @@ import { fullUrlToShortText } from './fullUrlToShortText'
 import { locationType } from './locationType'
 
 Handlebars.registerHelper('prettyDate', (date: CalendarEvent['dateStart']) => {
-	const d = new Date(
-		date.year,
-		date.month - 1,
-		date.day,
-		date.hour,
-		date.minute,
-	)
-	const raw = `${d.toLocaleDateString('cs', {
+	const raw = `${date.toLocaleDateString('cs', {
 		day: 'numeric',
 		month: 'long',
 		hour: 'numeric',
