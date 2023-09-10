@@ -13,6 +13,8 @@ const allCalendarEvents = await getAllCalendarEvents()
 const todayMorning = new Date()
 todayMorning.setHours(0, 0, 0, 0)
 
+todayMorning.setDate(todayMorning.getDate() + 5)
+
 const futureAndCurrentEvents = filterFutureCalendarEvents(
 	todayMorning,
 	allCalendarEvents,
@@ -90,6 +92,9 @@ console.log(message)
 console.log('')
 console.log('Image:', previewImageUrl)
 
+const mainLecturer =
+	(activeEvent.lecturers.length === 1 && activeEvent.lecturers.at(0)) || null
+
 await sendSlackMessage({
 	text: message,
 	blocks: [
@@ -104,6 +109,15 @@ await sendSlackMessage({
 				type: 'mrkdwn',
 				text: message,
 			},
+			...(mainLecturer?.avatarUrl
+				? {
+						accessory: {
+							type: 'image',
+							image_url: mainLecturer?.avatarUrl,
+							alt_text: mainLecturer.name,
+						},
+				  }
+				: {}),
 		},
 	],
 })
