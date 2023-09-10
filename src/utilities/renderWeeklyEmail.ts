@@ -1,6 +1,8 @@
 import fs from 'fs/promises'
 import Handlebars from 'handlebars'
 import { CalendarEvent } from './CalendarEvent'
+import { Lecturer } from './Lecturer'
+import { formatLecturersConjunction } from './formatLecturersConjunction'
 import { fullUrlToShortText } from './fullUrlToShortText'
 import { locationType } from './locationType'
 
@@ -14,6 +16,10 @@ Handlebars.registerHelper('prettyDate', (date: CalendarEvent['dateStart']) => {
 	})}`
 
 	return `${raw.substring(0, 1).toUpperCase()}${raw.substring(1)}`
+})
+
+Handlebars.registerHelper('formatLecturers', (lecturers: Lecturer[]) => {
+	return formatLecturersConjunction(lecturers.map(({ name }) => name))
 })
 
 Handlebars.registerHelper('shortLink', (link: string) => {

@@ -1,13 +1,12 @@
-import { knownSlackUsers } from './knownSlackUsers'
+import { Lecturer } from './Lecturer'
+import { formatLecturersConjunction } from './formatLecturersConjunction'
 
-export const mrkdwnLecturer = (lecturer: string | undefined) =>
-	lecturer
-		?.split(', ')
-		.map((name) => {
-			const lecturer = knownSlackUsers.find((user) => user.name === name)
-			if (lecturer) {
-				return `<@${lecturer.memberId}>`
+export const mrkdwnLecturer = (lecturers: Lecturer[]) =>
+	formatLecturersConjunction(
+		lecturers.map(({ name, slackId }) => {
+			if (slackId) {
+				return `<@${slackId}>`
 			}
 			return name
-		})
-		.join(', ')
+		}),
+	)

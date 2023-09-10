@@ -458,7 +458,7 @@
 																			"
 																			><i>{{prettyDate dateStart}}</i></span>
 																		</p>
-																		{{#if lecturer}}
+																		{{#if lecturers}}
 																			<p
 																				style='line-height: 140%; font-size: 14px;'
 																			>
@@ -468,7 +468,8 @@
 																				font-size: 14px;
 																				line-height: 19.6px;
 																			"
-																				>Lektor: {{lecturer}}</span>
+																				>Výuku povede:
+																					{{formatLecturers lecturers}}</span>
 																			</p>
 																		{{/if}}
 																		{{#if link}}

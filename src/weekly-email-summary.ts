@@ -29,13 +29,12 @@ const emailHtml = await renderWeeklyEmail(
 	weekEvents,
 	previewImageUrl,
 )
-await fs.writeFile(
-	`emails/${weekStart.getFullYear()}-${(weekStart.getMonth() + 1)
-		.toString()
-		.padStart(2, '0')}-${weekStart.getDate().toString().padStart(2, '0')}.html`,
-	emailHtml,
-	{ encoding: 'utf8' },
+const emailFileName = `emails/${weekStart.getFullYear()}-${(
+	weekStart.getMonth() + 1
 )
+	.toString()
+	.padStart(2, '0')}-${weekStart.getDate().toString().padStart(2, '0')}.html`
+await fs.writeFile(emailFileName, emailHtml, { encoding: 'utf8' })
 
 const currentYear = weekStart.getFullYear()
 const semester = weekStart.getMonth() < 7 ? 'jaro' : 'podzim'

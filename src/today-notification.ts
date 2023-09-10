@@ -4,7 +4,7 @@ import { createPreviewImageUrl } from './utilities/createPreviewImageUrl'
 import { filterFutureCalendarEvents } from './utilities/filterFutureCalendarEvents'
 import { fullUrlToShortText } from './utilities/fullUrlToShortText'
 import { getAllCalendarEvents } from './utilities/getAllCalendarEvents'
-import { mrkdwnLecturer } from './utilities/mrkdwnLecturer'
+import { mrkdwnLecturer as mrkdwnLecturers } from './utilities/mrkdwnLecturer'
 import { sendSlackMessage } from './utilities/sendSlackMessage'
 import { updateWebsiteSlideUrl } from './utilities/updateWebsiteSlideUrl'
 
@@ -55,10 +55,10 @@ let message = `Dnes, *${activeEvent.dateStart.toLocaleDateString('cs', {
 } probíhat další lekce.
 Plánované téma je *${activeEvent.title.replaceAll('\n', ', ')}*.`
 
-const lecturer = mrkdwnLecturer(activeEvent.lecturer)
+const lecturers = mrkdwnLecturers(activeEvent.lecturers)
 
-if (lecturer) {
-	message += `\nVýuku povede *${lecturer}*.`
+if (lecturers) {
+	message += `\nVýuku povede *${lecturers}*.`
 }
 const link = activeEvent.link
 	? `<${activeEvent.link}|${fullUrlToShortText(activeEvent.link)}>`

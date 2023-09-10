@@ -1,5 +1,6 @@
 import { CalendarEvent } from './CalendarEvent'
 import { createSlideUrl } from './createSlideUrl'
+import { formatLecturersConjunction } from './formatLecturersConjunction'
 
 export const createCalenderEventSlideUrl = (event: CalendarEvent) => {
 	const title = event.title
@@ -16,7 +17,9 @@ export const createCalenderEventSlideUrl = (event: CalendarEvent) => {
 			[''],
 		)
 		.join('\n')
-	const meta1 = event.lecturer ?? ''
+	const meta1 = formatLecturersConjunction(
+		event.lecturers.map(({ name }) => name),
+	)
 	const meta2 = `${event.dateStartLegacy.day}. ${
 		event.dateStartLegacy.month
 	}. ${event.dateStartLegacy.year} ${

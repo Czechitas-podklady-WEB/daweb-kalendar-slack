@@ -61,7 +61,7 @@ await sendSlackMessage({
 		...weekEvents.map((event) => {
 			const { dateStart, dateEnd } = event
 
-			const lecturer = mrkdwnLecturer(event.lecturer)
+			const lecturer = mrkdwnLecturer(event.lecturers)
 
 			return {
 				type: 'section',

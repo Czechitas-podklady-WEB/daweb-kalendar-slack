@@ -1,15 +1,18 @@
 import { sheets as s } from '@googleapis/sheets'
 import { CalendarEvent } from './CalendarEvent'
+import { getAllLecturers } from './getAllLecturers'
 import { getConfiguration } from './getConfiguration'
 
 export const getAllCalendarEvents = async () => {
+	const allLecturers = await getAllLecturers()
+
 	const { spreadsheetId, apiKey } = getConfiguration()
 
 	const dateColumnIndex = 2
 	const timeStartColumnIndex = 3
 	const timeEndColumnIndex = 4
 	const titleColumnIndex = 5
-	const lecturerColumnIndex = 7
+	const lecturersColumnIndex = 7
 	const typeColumnIndex = 8
 	const linkColumnIndex = 14
 	const range = 'Rozvrh!A1:O150'
@@ -32,7 +35,20 @@ export const getAllCalendarEvents = async () => {
 		const title: string = (row[titleColumnIndex] ?? '')
 			.trim()
 			.replaceAll('\n', ' ')
-		const lecturer: string = (row[lecturerColumnIndex] ?? '').trim()
+		const lecturers = ((row[lecturersColumnIndex] as string) ?? '')
+			.trim()
+			.split(', ')
+			.map((name) => {
+				const known = allLecturers.find((lecturer) => lecturer.name === name)
+				if (known) {
+					return known
+				}
+				return {
+					name,
+					avatarUrl: null,
+					slackId: null,
+				}
+			})
 		const type: string = (row[typeColumnIndex] ?? '').trim()
 		const link: string = (row[linkColumnIndex] ?? '').trim()
 
@@ -75,7 +91,7 @@ export const getAllCalendarEvents = async () => {
 							  }
 							: null,
 					title,
-					lecturer,
+					lecturers,
 					type,
 					link,
 				})
