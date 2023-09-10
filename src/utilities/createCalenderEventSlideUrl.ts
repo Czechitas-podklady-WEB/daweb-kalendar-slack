@@ -20,11 +20,13 @@ export const createCalenderEventSlideUrl = (event: CalendarEvent) => {
 	const meta1 = formatLecturersConjunction(
 		event.lecturers.map(({ name }) => name),
 	)
-	const meta2 = `${event.dateStartLegacy.day}. ${
-		event.dateStartLegacy.month
-	}. ${event.dateStartLegacy.year} ${
-		event.dateStartLegacy.hour
-	}:${event.dateStartLegacy.minute.toString().padStart(2, '0')}`
+	const meta2 = event.dateStart.toLocaleTimeString('cs', {
+		day: 'numeric',
+		month: 'numeric',
+		year: 'numeric',
+		minute: 'numeric',
+		hour: 'numeric',
+	})
 
 	return createSlideUrl(title, meta1, meta2)
 }
