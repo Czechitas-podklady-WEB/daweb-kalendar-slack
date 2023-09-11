@@ -13,8 +13,6 @@ const allCalendarEvents = await getAllCalendarEvents()
 const todayMorning = new Date()
 todayMorning.setHours(0, 0, 0, 0)
 
-todayMorning.setDate(todayMorning.getDate() + 5)
-
 const futureAndCurrentEvents = filterFutureCalendarEvents(
 	todayMorning,
 	allCalendarEvents,
