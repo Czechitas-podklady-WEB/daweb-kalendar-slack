@@ -1,4 +1,4 @@
-name: What is today
+name: Today notification
 
 on:
   schedule:
