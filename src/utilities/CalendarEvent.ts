@@ -21,4 +21,5 @@ export type CalendarEvent = {
 	type: LocationType
 	link: string
 	attendance: Attendance
+	address: string | null
 }

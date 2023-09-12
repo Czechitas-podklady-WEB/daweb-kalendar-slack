@@ -126,6 +126,9 @@ export const Weekly: FunctionComponent<{
 											Výuku povede: {formatLecturers(event.lecturers)}
 										</Text>
 									)}
+									{event.address && (
+										<Text style={line}>Místo: {event.address}</Text>
+									)}
 									{event.link && (
 										<Text style={line}>
 											Odkaz pro připojení:{' '}

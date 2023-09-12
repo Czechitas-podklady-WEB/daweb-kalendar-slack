@@ -84,6 +84,9 @@ if (activeEvent.type.code === 'online') {
 				: `v režimu *${activeEvent.type}*`
 		}.`
 	}
+	if (activeEvent.address) {
+		message += `\nMísto: *${activeEvent.address}*`
+	}
 	if (link) {
 		message += `\nOdkaz pro připojení online: ${link}.`
 	}

@@ -16,6 +16,7 @@ export const getAllCalendarEvents = async () => {
 	const titleColumnIndex = 5
 	const lecturersColumnIndex = 7
 	const typeColumnIndex = 8
+	const addressColumnIndex = 9
 	const linkColumnIndex = 14
 	const range = 'Rozvrh!A1:O150'
 
@@ -114,6 +115,7 @@ export const getAllCalendarEvents = async () => {
 			}
 			return 'unknown'
 		})()
+		const address: CalendarEvent['address'] = row[addressColumnIndex] || null
 
 		if (date && timeStart && title) {
 			const [day, month, year] = date.split('. ')
@@ -158,6 +160,7 @@ export const getAllCalendarEvents = async () => {
 					type,
 					link,
 					attendance,
+					address,
 				})
 			}
 		}
