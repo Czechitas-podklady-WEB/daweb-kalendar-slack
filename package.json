@@ -14,11 +14,15 @@
 	"license": "ISC",
 	"dependencies": {
 		"@googleapis/sheets": "^4.0.1",
+		"@react-email/components": "0.0.7",
+		"@react-email/render": "0.0.7",
+		"@react-email/tailwind": "0.0.8",
 		"@types/node": "^18.15.11",
 		"@types/nodemailer": "^6.4.7",
+		"@types/react": "^18.2.21",
 		"dotenv": "^16.0.3",
-		"handlebars": "^4.7.7",
 		"nodemailer": "^6.9.1",
+		"react-email": "1.9.4",
 		"tsx": "^3.12.6",
 		"typescript": "^5.0.4"
 	}

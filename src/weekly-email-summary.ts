@@ -24,11 +24,7 @@ const previewImageUrl = createPreviewImageUrl(slideUrl)
 
 console.log(weekEvents)
 
-const emailHtml = await renderWeeklyEmail(
-	weekNumber,
-	weekEvents,
-	previewImageUrl,
-)
+const emailHtml = renderWeeklyEmail({ weekNumber, weekEvents, previewImageUrl })
 const emailFileName = `emails/${weekStart.getFullYear()}-${(
 	weekStart.getMonth() + 1
 )

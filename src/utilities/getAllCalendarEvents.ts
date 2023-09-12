@@ -38,6 +38,7 @@ export const getAllCalendarEvents = async () => {
 		const lecturers = ((row[lecturersColumnIndex] as string) ?? '')
 			.trim()
 			.split(', ')
+			.filter((name) => name !== '')
 			.map((name) => {
 				const known = allLecturers.find((lecturer) => lecturer.name === name)
 				if (known) {
