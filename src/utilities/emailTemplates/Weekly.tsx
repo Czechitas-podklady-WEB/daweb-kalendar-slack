@@ -112,7 +112,7 @@ export const Weekly: FunctionComponent<{
 												: event.attendance === 'optional'
 												? ' - nepovinná lekce'
 												: null}
-											{event.type.code !== 'unkwnown' && (
+											{event.type.code !== 'unknown' && (
 												<> - {event.type.label}</>
 											)}{' '}
 											{event.type.emoji}

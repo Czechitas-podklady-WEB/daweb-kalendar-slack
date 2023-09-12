@@ -90,7 +90,7 @@ export const getAllCalendarEvents = async () => {
 			}
 			return {
 				label: type,
-				code: 'unkwnown',
+				code: 'unknown',
 				emoji: '🤹',
 			}
 		})()

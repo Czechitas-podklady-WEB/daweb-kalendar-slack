@@ -72,7 +72,7 @@ await sendSlackMessage({
 							: event.attendance === 'optional'
 							? ' - nepovinná lekce'
 							: ''
-					}${event.type.code === 'unkwnown' ? '' : ` - ${event.type.label}`} ${
+					}${event.type.code === 'unknown' ? '' : ` - ${event.type.label}`} ${
 						event.type.emoji
 					}
 > _${capitalizeFirstLetter(
