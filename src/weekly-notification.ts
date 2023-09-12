@@ -3,8 +3,8 @@ import { capitalizeFirstLetter } from './utilities/capitalizeFirstLetter'
 import { createPreviewImageUrl } from './utilities/createPreviewImageUrl'
 import { createSlideUrl } from './utilities/createSlideUrl'
 import { getNextWeek } from './utilities/getNextWeek'
-import { locationType } from './utilities/locationType'
 import { mrkdwnLecturer } from './utilities/mrkdwnLecturer'
+import { prettyLocationType } from './utilities/prettyLocationType'
 import { sendSlackMessage } from './utilities/sendSlackMessage'
 
 const { weekNumber, weekStart, weekEnd, weekEvents } = await getNextWeek()
@@ -67,9 +67,9 @@ await sendSlackMessage({
 				type: 'section',
 				text: {
 					type: 'mrkdwn',
-					text: `> ${locationType(event.type, 'short')} *${
+					text: `> ${prettyLocationType(event.type, 'short')} *${
 						event.title
-					}* - ${locationType(event.type, 'long')}
+					}* - ${prettyLocationType(event.type, 'long')}
 > _${capitalizeFirstLetter(
 						dateStart.toLocaleDateString('cs', {
 							day: 'numeric',

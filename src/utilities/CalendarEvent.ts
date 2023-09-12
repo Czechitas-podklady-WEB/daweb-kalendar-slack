@@ -1,4 +1,5 @@
 import { Lecturer } from './Lecturer'
+import { LocationType } from './LocationType'
 
 export type CalendarEvent = {
 	dateStartLegacy: {
@@ -16,6 +17,6 @@ export type CalendarEvent = {
 	dateEnd: Date | null
 	title: string
 	lecturers: Lecturer[]
-	type: string
+	type: LocationType
 	link: string
 }

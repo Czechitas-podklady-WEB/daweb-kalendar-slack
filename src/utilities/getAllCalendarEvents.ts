@@ -1,5 +1,6 @@
 import { sheets as s } from '@googleapis/sheets'
 import { CalendarEvent } from './CalendarEvent'
+import { LocationType } from './LocationType'
 import { getAllLecturers } from './getAllLecturers'
 import { getConfiguration } from './getConfiguration'
 
@@ -50,7 +51,35 @@ export const getAllCalendarEvents = async () => {
 					slackId: null,
 				}
 			})
-		const type: string = (row[typeColumnIndex] ?? '').trim()
+		const type: LocationType = (() => {
+			const type: string = (row[typeColumnIndex] ?? '').trim()
+			if (type === 'hybrid') {
+				return {
+					label: 'hybrid',
+					code: 'hybrid',
+					emoji: '🏰',
+				}
+			}
+			if (type === 'online') {
+				return {
+					label: 'online',
+					code: 'online',
+					emoji: '💻',
+				}
+			}
+			if (type === 'prezenčně' || type === 'prezenční') {
+				return {
+					label: 'online',
+					code: 'online',
+					emoji: '🚶',
+				}
+			}
+			return {
+				label: type,
+				code: 'unkwnown',
+				emoji: '🤹‍♀️',
+			}
+		})()
 		const link: string = (row[linkColumnIndex] ?? '').trim()
 
 		if (date && timeStart && title) {

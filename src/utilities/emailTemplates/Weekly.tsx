@@ -17,7 +17,7 @@ import { CalendarEvent } from '../CalendarEvent'
 import { Lecturer } from '../Lecturer'
 import { formatLecturersConjunction } from '../formatLecturersConjunction'
 import { fullUrlToShortText } from '../fullUrlToShortText'
-import { locationType } from '../locationType'
+import { prettyLocationType } from '../prettyLocationType'
 
 export const Weekly: FunctionComponent<{
 	weekNumber: number
@@ -27,7 +27,7 @@ export const Weekly: FunctionComponent<{
 	return (
 		<Html>
 			<Head />
-			<Preview>{/* @TODO */}</Preview>
+			<Preview>{weekNumber.toString()}. týden digitální akademie</Preview>
 			<Tailwind
 				config={{
 					theme: {
@@ -98,12 +98,12 @@ export const Weekly: FunctionComponent<{
 											fontWeight: 'bold',
 											fontSize: '18px',
 											lineHeight: '18px',
-											color: '#0c0d0e',
+											color: event.type.code === 'prezenčně' ? '' : '#0c0d0e',
 										}}
 									>
-										{locationType(event.type, 'short')} {event.title} -{' '}
+										{prettyLocationType(event.type, 'short')} {event.title} -{' '}
 										<span className="font-normal">
-											{locationType(event.type, 'long')}
+											{prettyLocationType(event.type, 'long')}
 										</span>
 									</Heading>
 									<Text style={{ margin: '4px 0 6px 0', fontStyle: 'italic' }}>
