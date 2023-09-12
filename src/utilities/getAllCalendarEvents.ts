@@ -1,4 +1,5 @@
 import { sheets as s } from '@googleapis/sheets'
+import { Attendance } from './Attendance'
 import { CalendarEvent } from './CalendarEvent'
 import { LocationType } from './LocationType'
 import { getAllLecturers } from './getAllLecturers'
@@ -20,16 +21,28 @@ export const getAllCalendarEvents = async () => {
 
 	const sheets = s('v4')
 
-	const sheet = await sheets.spreadsheets.values.get({
-		key: apiKey,
-		spreadsheetId,
-		majorDimension: 'ROWS',
-		range,
-	})
+	const { values } = (
+		await sheets.spreadsheets.values.get({
+			key: apiKey,
+			spreadsheetId,
+			majorDimension: 'ROWS',
+			range,
+		})
+	).data
+	const backgroundColorValues = (
+		await sheets.spreadsheets.get({
+			key: apiKey,
+			spreadsheetId,
+			ranges: [range],
+			fields: 'sheets.data.rowData.values.userEnteredFormat.backgroundColor',
+		})
+	).data.sheets
+		?.at(0)
+		?.data?.at(0)?.rowData
 
 	const cleanData: CalendarEvent[] = []
 
-	sheet.data.values?.forEach((row) => {
+	values?.forEach((row, rowIndex) => {
 		const date: string = (row[dateColumnIndex] ?? '').trim()
 		const timeStart: string = (row[timeStartColumnIndex] ?? '').trim()
 		const timeEnd: string = (row[timeEndColumnIndex] ?? '').trim()
@@ -55,7 +68,7 @@ export const getAllCalendarEvents = async () => {
 			const type: string = (row[typeColumnIndex] ?? '').trim()
 			if (type === 'hybrid') {
 				return {
-					label: 'hybrid',
+					label: 'prezenčně',
 					code: 'hybrid',
 					emoji: '🏰',
 				}
@@ -77,10 +90,30 @@ export const getAllCalendarEvents = async () => {
 			return {
 				label: type,
 				code: 'unkwnown',
-				emoji: '🤹‍♀️',
+				emoji: '🤹',
 			}
 		})()
 		const link: string = (row[linkColumnIndex] ?? '').trim()
+		const attendance: Attendance = (() => {
+			const backgroundColor = backgroundColorValues
+				?.at(rowIndex)
+				?.values?.at(titleColumnIndex)?.userEnteredFormat?.backgroundColor
+			if (
+				backgroundColor?.red === 1 &&
+				backgroundColor?.green === 0.9490196 &&
+				backgroundColor?.blue === 0.8
+			) {
+				return 'required'
+			}
+			if (
+				backgroundColor?.red === 0.8117647 &&
+				backgroundColor?.green === 0.8862745 &&
+				backgroundColor?.blue === 0.9529412
+			) {
+				return 'optional'
+			}
+			return 'unknown'
+		})()
 
 		if (date && timeStart && title) {
 			const [day, month, year] = date.split('. ')
@@ -124,6 +157,7 @@ export const getAllCalendarEvents = async () => {
 					lecturers,
 					type,
 					link,
+					attendance,
 				})
 			}
 		}

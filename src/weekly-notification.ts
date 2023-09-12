@@ -4,7 +4,6 @@ import { createPreviewImageUrl } from './utilities/createPreviewImageUrl'
 import { createSlideUrl } from './utilities/createSlideUrl'
 import { getNextWeek } from './utilities/getNextWeek'
 import { mrkdwnLecturer } from './utilities/mrkdwnLecturer'
-import { prettyLocationType } from './utilities/prettyLocationType'
 import { sendSlackMessage } from './utilities/sendSlackMessage'
 
 const { weekNumber, weekStart, weekEnd, weekEvents } = await getNextWeek()
@@ -67,9 +66,15 @@ await sendSlackMessage({
 				type: 'section',
 				text: {
 					type: 'mrkdwn',
-					text: `> ${prettyLocationType(event.type, 'short')} *${
-						event.title
-					}* - ${prettyLocationType(event.type, 'long')}
+					text: `> ${event.type.emoji} *${event.title}*${
+						event.attendance === 'required'
+							? ' - povinná lekce'
+							: event.attendance === 'optional'
+							? ' - nepovinná lekce'
+							: ''
+					}${event.type.code === 'unkwnown' ? '' : ` - ${event.type.label}`} ${
+						event.type.emoji
+					}
 > _${capitalizeFirstLetter(
 						dateStart.toLocaleDateString('cs', {
 							day: 'numeric',

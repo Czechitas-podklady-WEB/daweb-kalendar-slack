@@ -17,7 +17,6 @@ import { CalendarEvent } from '../CalendarEvent'
 import { Lecturer } from '../Lecturer'
 import { formatLecturersConjunction } from '../formatLecturersConjunction'
 import { fullUrlToShortText } from '../fullUrlToShortText'
-import { prettyLocationType } from '../prettyLocationType'
 
 export const Weekly: FunctionComponent<{
 	weekNumber: number
@@ -98,12 +97,25 @@ export const Weekly: FunctionComponent<{
 											fontWeight: 'bold',
 											fontSize: '18px',
 											lineHeight: '18px',
-											color: event.type.code === 'prezenčně' ? '' : '#0c0d0e',
+											color:
+												event.attendance === 'required'
+													? '#bf9000'
+													: event.attendance === 'optional'
+													? '#1c4587'
+													: '#0c0d0e',
 										}}
 									>
-										{prettyLocationType(event.type, 'short')} {event.title} -{' '}
+										{event.type.emoji} {event.title}
 										<span className="font-normal">
-											{prettyLocationType(event.type, 'long')}
+											{event.attendance === 'required'
+												? ' - povinná lekce'
+												: event.attendance === 'optional'
+												? ' - nepovinná lekce'
+												: null}
+											{event.type.code !== 'unkwnown' && (
+												<> - {event.type.label}</>
+											)}{' '}
+											{event.type.emoji}
 										</span>
 									</Heading>
 									<Text style={{ margin: '4px 0 6px 0', fontStyle: 'italic' }}>

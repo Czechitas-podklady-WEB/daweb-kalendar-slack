@@ -1,3 +1,4 @@
+import { Attendance } from './Attendance'
 import { Lecturer } from './Lecturer'
 import { LocationType } from './LocationType'
 
@@ -19,4 +20,5 @@ export type CalendarEvent = {
 	lecturers: Lecturer[]
 	type: LocationType
 	link: string
+	attendance: Attendance
 }

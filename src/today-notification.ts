@@ -52,7 +52,13 @@ let message = `Dnes, *${activeEvent.dateStart.toLocaleDateString('cs', {
 				minute: 'numeric',
 		  })}*`
 		: ''
-} probíhat další lekce.
+} probíhat další${
+	activeEvent.attendance === 'required'
+		? ' *povinná*'
+		: activeEvent.attendance === 'optional'
+		? ' nepovinná'
+		: ''
+} lekce.
 Plánované téma je *${activeEvent.title.replaceAll('\n', ', ')}*.`
 
 const lecturers = mrkdwnLecturers(activeEvent.lecturers)
@@ -63,7 +69,7 @@ if (lecturers) {
 const link = activeEvent.link
 	? `<${activeEvent.link}|${fullUrlToShortText(activeEvent.link)}>`
 	: null
-if (activeEvent.type === 'online') {
+if (activeEvent.type.code === 'online') {
 	message += `\nLekce bude probíhat *pouze online 💻*`
 
 	if (link) {
@@ -73,7 +79,7 @@ if (activeEvent.type === 'online') {
 } else {
 	if (activeEvent.type) {
 		message += `\nLekce bude probíhat ${
-			activeEvent.type === 'hybrid'
+			activeEvent.type.code === 'hybrid'
 				? '*hybridně 🏰*'
 				: `v režimu *${activeEvent.type}*`
 		}.`
