@@ -39,6 +39,7 @@ export const Weekly: FunctionComponent<{
 				}}
 			>
 				<Body
+					className="py-14"
 					style={{
 						backgroundColor: '#f8f8fc',
 						fontFamily: 'HelveticaNeue,Helvetica,Arial,sans-serif',
