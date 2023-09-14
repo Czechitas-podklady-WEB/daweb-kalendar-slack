@@ -57,7 +57,6 @@ export const Weekly: FunctionComponent<{
 					>
 						<Section
 							style={{
-								display: 'flex',
 								backgroundColor: '#613786',
 							}}
 						>
@@ -69,6 +68,7 @@ export const Weekly: FunctionComponent<{
 									width: '100%',
 									height: 'auto',
 								}}
+								alt={`${weekNumber}. týden`}
 							/>
 						</Section>
 						<Section style={{ padding: '30px 30px 40px 30px' }}>
