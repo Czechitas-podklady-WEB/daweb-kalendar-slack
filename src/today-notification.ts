@@ -78,11 +78,7 @@ if (activeEvent.type.code === 'online') {
 	message += '.'
 } else {
 	if (activeEvent.type) {
-		message += `\nLekce bude probíhat ${
-			activeEvent.type.code === 'hybrid'
-				? '*hybridně 🏰*'
-				: `v režimu *${activeEvent.type}*`
-		}.`
+		message += `\nLekce bude probíhat *${activeEvent.type.label}*. ${activeEvent.type.emoji}`
 	}
 	if (activeEvent.address) {
 		message += `\nMísto: *${activeEvent.address}*`
