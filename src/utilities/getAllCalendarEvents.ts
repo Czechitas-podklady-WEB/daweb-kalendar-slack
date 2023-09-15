@@ -69,7 +69,7 @@ export const getAllCalendarEvents = async () => {
 			const type: string = (row[typeColumnIndex] ?? '').trim()
 			if (type === 'hybrid') {
 				return {
-					label: 'hybrid',
+					label: 'hybridně',
 					code: 'hybrid',
 					emoji: '🏰',
 				}
