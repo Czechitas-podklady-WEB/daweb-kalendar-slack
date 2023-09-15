@@ -94,7 +94,13 @@ export const getAllCalendarEvents = async () => {
 				emoji: '🤹',
 			}
 		})()
-		const link: string = (row[linkColumnIndex] ?? '').trim()
+		const link = (() => {
+			const link: string = (row[linkColumnIndex] ?? '').trim()
+			if (link.startsWith('http://') || link.startsWith('https://')) {
+				return link
+			}
+			return null
+		})()
 		const attendance: Attendance = (() => {
 			const backgroundColor = backgroundColorValues
 				?.at(rowIndex)
