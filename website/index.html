@@ -4,42 +4,21 @@
 		<meta charset="UTF-8" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Přesměrování</title>
+		<title>Kalendář</title>
 		<meta name="color-scheme" content="light dark" />
-		<script type="module">
-			const slideUrl = await (async () => {
-				try {
-					const response = await fetch('slide-url.json')
-					if (!response.ok) {
-						throw new Error('HTTP error!')
-					}
-					const data = await response.json()
-					if (typeof data.url === 'string') {
-						return data.url
-					}
-				} catch (error) {
-					console.error(error)
-					setTimeout(() => {
-						window.location.reload()
-					}, 1000)
-				}
-				return ''
-			})()
-			if (slideUrl.startsWith('http')) {
-				document.body.innerHTML = `<iframe src="${slideUrl}"></iframe>`
-			}
-		</script>
 		<style>
-			iframe {
-				position: fixed;
-				inset: 0;
-				width: 100%;
-				height: 100%;
-				border: none;
+			body {
+				font-family: sans-serif;
+				max-width: 40rem;
+				margin-inline: auto;
 			}
 		</style>
 	</head>
 	<body>
-		<p>Něco se porouchalo.</p>
+		<h1>Kalendář</h1>
+		<ul>
+			<li><a href="slide.html">Úvodní slide nejbližší lekce</a></li>
+			<li><a href="events.json">Všechny akce ve strojově čitelné podobě</a></li>
+		</ul>
 	</body>
 </html>

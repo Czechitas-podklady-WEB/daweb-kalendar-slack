@@ -6,6 +6,7 @@ import { fullUrlToShortText } from './utilities/fullUrlToShortText'
 import { getAllCalendarEvents } from './utilities/getAllCalendarEvents'
 import { mrkdwnLecturer as mrkdwnLecturers } from './utilities/mrkdwnLecturer'
 import { sendSlackMessage } from './utilities/sendSlackMessage'
+import { updateAllCalendarEventsJson } from './utilities/updateAllCalendarEventsJson'
 import { updateWebsiteSlideUrl } from './utilities/updateWebsiteSlideUrl'
 
 const allCalendarEvents = await getAllCalendarEvents()
@@ -17,6 +18,8 @@ const futureAndCurrentEvents = filterFutureCalendarEvents(
 	todayMorning,
 	allCalendarEvents,
 )
+
+await updateAllCalendarEventsJson(allCalendarEvents)
 
 const activeEvent = futureAndCurrentEvents[0]
 

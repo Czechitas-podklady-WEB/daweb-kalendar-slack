@@ -1,3 +1,4 @@
 /node_modules/
 /.env
 /website/slide-url.json
+/website/events.json
