@@ -2,7 +2,6 @@ import { exit } from 'process'
 import { createCalenderEventSlideUrl } from './utilities/createCalenderEventSlideUrl'
 import { createPreviewImageUrl } from './utilities/createPreviewImageUrl'
 import { filterFutureCalendarEvents } from './utilities/filterFutureCalendarEvents'
-import { fullUrlToShortText } from './utilities/fullUrlToShortText'
 import { getAllCalendarEvents } from './utilities/getAllCalendarEvents'
 import { mrkdwnLecturer as mrkdwnLecturers } from './utilities/mrkdwnLecturer'
 import { sendSlackMessage } from './utilities/sendSlackMessage'
@@ -70,7 +69,7 @@ if (lecturers) {
 	message += `\nVýuku povede *${lecturers}*.`
 }
 const link = activeEvent.link
-	? `<${activeEvent.link}|${fullUrlToShortText(activeEvent.link)}>`
+	? `<${activeEvent.link.url}|${activeEvent.link.text}>`
 	: null
 if (activeEvent.type.code === 'online') {
 	message += `\nLekce bude probíhat *pouze online 💻*`

@@ -2,6 +2,7 @@ import { sheets as s } from '@googleapis/sheets'
 import { Attendance } from './Attendance'
 import { CalendarEvent } from './CalendarEvent'
 import { LocationType } from './LocationType'
+import { fullUrlToShortText } from './fullUrlToShortText'
 import { getAllLecturers } from './getAllLecturers'
 import { getConfiguration } from './getConfiguration'
 
@@ -94,10 +95,13 @@ export const getAllCalendarEvents = async () => {
 				emoji: '🤹',
 			}
 		})()
-		const link = (() => {
+		const link: CalendarEvent['link'] = (() => {
 			const link: string = (row[linkColumnIndex] ?? '').trim()
 			if (link.startsWith('http://') || link.startsWith('https://')) {
-				return link
+				return {
+					url: link,
+					text: fullUrlToShortText(link),
+				}
 			}
 			return null
 		})()

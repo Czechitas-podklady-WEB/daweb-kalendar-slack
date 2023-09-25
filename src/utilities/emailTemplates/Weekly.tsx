@@ -16,7 +16,6 @@ import React, { CSSProperties, FunctionComponent } from 'react'
 import { CalendarEvent } from '../CalendarEvent'
 import { Lecturer } from '../Lecturer'
 import { formatLecturersConjunction } from '../formatLecturersConjunction'
-import { fullUrlToShortText } from '../fullUrlToShortText'
 
 export const Weekly: FunctionComponent<{
 	weekNumber: number
@@ -135,9 +134,9 @@ export const Weekly: FunctionComponent<{
 											Odkaz pro připojení:{' '}
 											<Link
 												className="text-brand font-bold underline"
-												href={event.link}
+												href={event.link.url}
 											>
-												{fullUrlToShortText(event.link)}
+												{event.link.text}
 											</Link>
 										</Text>
 									)}

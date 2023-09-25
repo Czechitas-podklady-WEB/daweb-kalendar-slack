@@ -19,7 +19,10 @@ export type CalendarEvent = {
 	title: string
 	lecturers: Lecturer[]
 	type: LocationType
-	link: string | null
+	link: null | {
+		url: string
+		text: string
+	}
 	attendance: Attendance
 	address: string | null
 }
