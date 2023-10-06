@@ -15,6 +15,7 @@ import { Tailwind } from '@react-email/tailwind'
 import React, { CSSProperties, FunctionComponent } from 'react'
 import { CalendarEvent } from '../CalendarEvent'
 import { Lecturer } from '../Lecturer'
+import { capitalizeFirstLetter } from '../capitalizeFirstLetter'
 import { formatLecturersConjunction } from '../formatLecturersConjunction'
 
 export const Weekly: FunctionComponent<{
@@ -119,7 +120,7 @@ export const Weekly: FunctionComponent<{
 										</span>
 									</Heading>
 									<Text style={{ margin: '4px 0 6px 0', fontStyle: 'italic' }}>
-										{prettyDate(event.dateStart)}
+										{prettyDate(event.dateStart, event.dateEnd)}
 									</Text>
 									{event.lecturers.length > 0 && (
 										<Text style={line}>
@@ -156,16 +157,28 @@ export const Weekly: FunctionComponent<{
 	)
 }
 
-const prettyDate = (date: CalendarEvent['dateStart']) => {
-	const raw = `${date.toLocaleDateString('cs', {
-		day: 'numeric',
-		month: 'long',
+const prettyDate = (
+	dateStart: CalendarEvent['dateStart'],
+	dateEnd: CalendarEvent['dateEnd'],
+) => {
+	return `${capitalizeFirstLetter(
+		dateStart.toLocaleDateString('cs', {
+			day: 'numeric',
+			month: 'long',
+			weekday: 'long',
+		}),
+	)} od ${dateStart.toLocaleTimeString('cs', {
 		hour: 'numeric',
 		minute: 'numeric',
-		weekday: 'long',
-	})}`
-
-	return `${raw.substring(0, 1).toUpperCase()}${raw.substring(1)}`
+	})}${
+		dateEnd
+			? ' do ' +
+			  dateEnd.toLocaleTimeString('cs', {
+					hour: 'numeric',
+					minute: 'numeric',
+			  })
+			: ''
+	}`
 }
 
 const formatLecturers = (lecturers: Lecturer[]) => {
