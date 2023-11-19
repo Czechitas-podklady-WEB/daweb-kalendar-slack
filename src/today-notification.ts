@@ -103,11 +103,12 @@ const mainLecturer =
 await sendSlackMessage({
 	text: message,
 	blocks: [
-		{
-			type: 'image',
-			image_url: previewImageUrl,
-			alt_text: '',
-		},
+		// @TODO: uncomment once apiflash quota is increased
+		// {
+		// 	type: 'image',
+		// 	image_url: previewImageUrl,
+		// 	alt_text: '',
+		// },
 		{
 			type: 'section',
 			text: {
