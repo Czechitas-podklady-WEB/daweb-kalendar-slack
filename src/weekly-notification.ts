@@ -42,12 +42,11 @@ console.log('Image:', previewImageUrl)
 await sendSlackMessage({
 	text: header,
 	blocks: [
-		// @TODO: uncomment once apiflash quota is increased
-		// {
-		// 	type: 'image',
-		// 	image_url: previewImageUrl,
-		// 	alt_text: '',
-		// },
+		{
+			type: 'image',
+			image_url: previewImageUrl,
+			alt_text: '',
+		},
 		{
 			type: 'section',
 			text: {
